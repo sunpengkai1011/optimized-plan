@@ -3,10 +3,10 @@ package industryproject.mit.deliveryoptimise.entities;
 import java.io.Serializable;
 import java.util.List;
 
-public class RequestAddressInfo implements Serializable {
+public class RouteRequestInfo implements Serializable {
     private String origin;
     private String destination;
-    private List<String> waypoints;
+    private List<UAddress> way_points;
 
     public String getOrigin() {
         return origin;
@@ -24,20 +24,20 @@ public class RequestAddressInfo implements Serializable {
         this.destination = destination;
     }
 
-    public List<String> getWaypoints() {
-        return waypoints;
+    public List<UAddress> getWayPoints() {
+        return way_points;
     }
 
-    public void setWaypoints(List<String> waypoints) {
-        this.waypoints = waypoints;
+    public void setWayPoints(List<UAddress> way_points) {
+        this.way_points = way_points;
     }
 
     public String getWaypointsStr(){
-        String waypiont = "optimize:true|";
-        for (String item: waypoints){
-            waypiont = waypiont + item + "|";
+        String way_point = "optimize:true|";
+        for (UAddress item: way_points){
+            way_point = way_point + item.toString() + "|";
         }
-        String result = waypiont.substring(0, waypiont.length()-1);
+        String result = way_point.substring(0, way_point.length()-1);
         result = result.replace(" ", "+");
         result = result.replace(",", "+");
         return result;

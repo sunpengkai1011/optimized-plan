@@ -11,7 +11,7 @@ import android.support.v4.app.DialogFragment;
 import android.widget.Toast;
 
 import industryproject.mit.deliveryoptimise.R;
-import industryproject.mit.deliveryoptimise.activity.MapActivity;
+import industryproject.mit.deliveryoptimise.view.map.MapActivity;
 
 /**
  * Utility class for access to runtime permissions.

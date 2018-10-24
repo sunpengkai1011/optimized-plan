@@ -2,8 +2,8 @@
     <string name="app_name">DeliveryOptimise</string>
     <string name="back">Back</string>
     <string name="google_maps_key">AIzaSyA8eJEaPxmkqOSRBC-pNoCQzemiJfIjo5U</string>
-    <string name="title_addressAct">Addresses</string>
-    <string name="title_mapAct">Map</string>
+    <string name="title_act_locations">LOCATIONS</string>
+    <string name="title_act_map">MAP</string>
 
     <string name="btnMessage_depart">Depart</string>
     <string name="btnMessage_arrive">Arrive</string>
@@ -12,6 +12,38 @@
 
     <string name="btnMessage_depart_clicked">You already clicked the "Depart" button, do you want to click again?</string>
     <string name="btnMessage_arrive_clicked">You already clicked the "Arrive" button, do you want to click again?</string>
+
+    <!-- Location -->
+    <string name="name_origin">Origin</string>
+    <string name="name_destination">Destination</string>
+    <string name="name_waypoint">WayPoint</string>
+
+    <!-- Login -->
+    <string name="hint_username">Username.</string>
+    <string name="hint_password">Password.</string>
+    <string name="btn_login">Login</string>
+    <string name="btn_to_login">Register</string>
+    <string name="title_login">LOGIN</string>
+    <string name="toast_empty_username">The username is empty. Please enter the username.</string>
+    <string name="toast_empty_password">The password is empty. Please enter the password.</string>
+
+    <!-- Register -->
+    <string name="hint_confirm_pwd">Confirm the password.</string>
+    <string name="hint_phone_number">Phone number.</string>
+    <string name="hint_email">Email address.</string>
+    <string name="hint_city">City.</string>
+    <string name="hint_suburb">Suburb.</string>
+    <string name="hint_street">Street.</string>
+    <string name="btn_register">Register</string>
+    <string name="title_register">REGISTER</string>
+    <string name="toast_confirm_pwd">Please confirm the password.</string>
+    <string name="toast_pwd_different">The passwords are different, please enter the password again.</string>
+    <string name="toast_phone_number">The phone number is empty. Please enter the phone number.</string>
+    <string name="toast_email">The email is empty. Please enter the email.</string>
+    <string name="toast_city">The city is empty. Please enter the city.</string>
+    <string name="toast_suburb">The suburb is empty. Please enter the suburb.</string>
+    <string name="toast_street">The street is empty. Please enter the street.</string>
+    <string name="toast_feedback">The feedback is empty. Please enter the feedback.</string>
 
     <!--    Permissions    -->
     <string name="permission_rationale_location">Access to the location service is required to demonstrate the \'my location\' feature, which shows your current location on the map.</string>

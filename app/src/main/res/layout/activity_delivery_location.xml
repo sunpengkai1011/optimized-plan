@@ -5,10 +5,19 @@
     <include android:id="@+id/title_bar"
         layout="@layout/view_title_bar"/>
 
-    <ListView
-        android:id="@+id/lv_item"
+    <Button
+        android:id="@+id/btn_map"
+        style="@style/general_button"
+        android:text="Optimise Routes"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_alignParentBottom="true"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_locations"
         android:layout_below="@+id/title_bar"
         android:layout_above="@+id/btn_map"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"/>
+
 </RelativeLayout>

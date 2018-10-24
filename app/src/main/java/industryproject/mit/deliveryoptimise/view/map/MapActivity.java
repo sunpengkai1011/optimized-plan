@@ -1,4 +1,4 @@
-package industryproject.mit.deliveryoptimise.activity;
+package industryproject.mit.deliveryoptimise.view.map;
 
 import android.Manifest;
 import android.app.Dialog;
@@ -13,6 +13,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -28,26 +29,26 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import industryproject.mit.deliveryoptimise.BaseActivity;
 import industryproject.mit.deliveryoptimise.Constants;
 import industryproject.mit.deliveryoptimise.R;
 import industryproject.mit.deliveryoptimise.adapter.LegRouteAdapter;
 import industryproject.mit.deliveryoptimise.entities.LegInfo;
 import industryproject.mit.deliveryoptimise.entities.RouteResponse;
+import industryproject.mit.deliveryoptimise.entities.UAddress;
+import industryproject.mit.deliveryoptimise.presenter.map.MapPresenterImpl;
 import industryproject.mit.deliveryoptimise.utils.GeneralUtil;
 import industryproject.mit.deliveryoptimise.utils.MapUtil;
 import industryproject.mit.deliveryoptimise.utils.PermissionUtil;
 
-public class MapActivity extends FragmentActivity implements
-        GoogleMap.OnMapLoadedCallback,
-        RecyclerViewPager.OnPageChangedListener,
-        GoogleMap.OnMyLocationButtonClickListener,
-        GoogleMap.OnMyLocationClickListener,
-        OnMapReadyCallback,
-        GoogleApiClient.OnConnectionFailedListener,
-        GoogleApiClient.ConnectionCallbacks,
-        GoogleMap.OnMarkerClickListener,
-        GoogleMap.OnMapClickListener,
-        GoogleMap.OnMapLongClickListener{
+public class MapActivity extends BaseActivity implements
+        IMapView, GoogleMap.OnMapLoadedCallback, RecyclerViewPager.OnPageChangedListener,
+        GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener, OnMapReadyCallback,
+        GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks,
+        GoogleMap.OnMarkerClickListener, GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener{
     private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClient;
 
@@ -57,25 +58,23 @@ public class MapActivity extends FragmentActivity implements
     private CardView cv_route_info;
     private RelativeLayout lyt_back, lyt_navigate;
     private RecyclerViewPager rvp_routes;
+    private List<UAddress> addresses;
     private RouteResponse response;
 
     private int currentLeg = 0;
 
+    private MapPresenterImpl mapPresenter;
+    private boolean isLoaded = false;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        addresses = (ArrayList<UAddress>) getIntent().getExtras().getSerializable(Constants.KEY_INTENT_ADDRESSES);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_map);
-        initView();
-        initData();
-        initListener();
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    private void initView(){
+    protected void initView(){
+        setContentView(R.layout.activity_map);
         tv_title = findViewById(R.id.tv_title);
         lyt_back = findViewById(R.id.lyt_back);
         lyt_navigate = findViewById(R.id.lyt_navigate);
@@ -85,18 +84,18 @@ public class MapActivity extends FragmentActivity implements
         tv_duration = findViewById(R.id.tv_duration);
     }
 
-    private void initData(){
+    @Override
+    protected void initData(){
         lyt_navigate.setVisibility(View.VISIBLE);
-        tv_title.setText(R.string.title_mapAct);
+        tv_title.setText(R.string.title_act_map);
         lyt_back.setVisibility(View.VISIBLE);
 
-        response = (RouteResponse) getIntent().getSerializableExtra("response");
+
+
+        mapPresenter = new MapPresenterImpl(this, this);
+        mapPresenter.requestOptimiseRoutes(addresses);
 
         rvp_routes = findViewById(R.id.rvp_routes);
-        rvp_routes.setLayoutManager(new LinearLayoutManager(this, LinearLayout.HORIZONTAL, false));
-        LegRouteAdapter adapter = new LegRouteAdapter(this, response.getRoutes().get(0).getLegs());
-        rvp_routes.addOnPageChangedListener(this);
-        rvp_routes.setAdapter(adapter);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.frg_map);
@@ -109,25 +108,24 @@ public class MapActivity extends FragmentActivity implements
                     .addApi(LocationServices.API)
                     .build();
         }
-
-        tv_num_markers.setText("The total delivery locations are : " + response.getRoutes().get(0).getLegs().size());
-        tv_duration.setText("The total duration is : " + GeneralUtil.secondToMinutes(getTotalDistanceAndDuration()[1]));
-        tv_distance.setText("The total distance is : " + GeneralUtil.mToKm(getTotalDistanceAndDuration()[0]));
     }
 
-    private void initListener(){
-        lyt_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+    @Override
+    protected void initListener(){
+        lyt_back.setOnClickListener(this);
+        lyt_navigate.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.lyt_back:
                 MapActivity.this.finish();
-            }
-        });
-        lyt_navigate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+                break;
+            case R.id.lyt_navigate:
                 MapUtil.intentToGoogleMap(MapActivity.this, response.getRoutes().get(0));
-            }
-        });
+                break;
+        }
     }
 
     @Override
@@ -150,8 +148,6 @@ public class MapActivity extends FragmentActivity implements
         mMap.setOnMyLocationButtonClickListener(this);
         mMap.setOnMyLocationClickListener(this);
         enableMyLocation();
-        MapUtil.addMarkers(mMap, response.getRoutes().get(0).getLegs());
-        MapUtil.drawRoute(mMap, this, response.getRoutes().get(0).getLegs());
         mMap.getUiSettings().setZoomControlsEnabled(true);
         mMap.getUiSettings().setMapToolbarEnabled(false);
         mMap.setOnMarkerClickListener(this);
@@ -161,14 +157,10 @@ public class MapActivity extends FragmentActivity implements
     }
 
     @Override
-    public void onConnected(@Nullable Bundle bundle) {
-        Toast.makeText(this, "connected", Toast.LENGTH_SHORT).show();
-    }
+    public void onConnected(@Nullable Bundle bundle) { }
 
     @Override
-    public void onConnectionSuspended(int i) {
-
-    }
+    public void onConnectionSuspended(int i) { }
 
     @Override
     public boolean onMarkerClick(Marker marker) {
@@ -325,7 +317,10 @@ public class MapActivity extends FragmentActivity implements
 
     @Override
     public void onMapLoaded() {
-        MapUtil.displayArea(mMap, this, response.getRoutes().get(0).getBounds(), 40);
+        isLoaded = true;
+        if(response != null) {
+            MapUtil.displayArea(mMap, this, response.getRoutes().get(0).getBounds(), 40);
+        }
     }
 
     private int[] getTotalDistanceAndDuration(){
@@ -336,5 +331,29 @@ public class MapActivity extends FragmentActivity implements
             totalDistance += info.getDistance().getValue();
         }
         return new int[]{totalDistance, totalDuration};
+    }
+
+    @Override
+    public void routeResponse(RouteResponse response) {
+        this.response = response;
+        if(isLoaded) {
+            MapUtil.displayArea(mMap, this, response.getRoutes().get(0).getBounds(), 40);
+        }
+        rvp_routes.setLayoutManager(new LinearLayoutManager(this, LinearLayout.HORIZONTAL, false));
+        LegRouteAdapter adapter = new LegRouteAdapter(this, response.getRoutes().get(0).getLegs());
+        rvp_routes.addOnPageChangedListener(this);
+        rvp_routes.setAdapter(adapter);
+
+        tv_num_markers.setText("The total delivery locations are : " + response.getRoutes().get(0).getLegs().size());
+        tv_duration.setText("The total duration is : " + GeneralUtil.secondToMinutes(getTotalDistanceAndDuration()[1]));
+        tv_distance.setText("The total distance is : " + GeneralUtil.mToKm(getTotalDistanceAndDuration()[0]));
+
+        MapUtil.addMarkers(mMap, response.getRoutes().get(0).getLegs());
+        MapUtil.drawRoute(mMap, this, response.getRoutes().get(0).getLegs());
+    }
+
+    @Override
+    public void routeResponseError() {
+        Toast.makeText(this, "Routes request failed", Toast.LENGTH_SHORT).show();
     }
 }

@@ -1,4 +1,4 @@
-package industryproject.mit.deliveryoptimise.activity;
+package industryproject.mit.deliveryoptimise;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,8 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 
 import java.lang.ref.WeakReference;
+
+import industryproject.mit.deliveryoptimise.view.login.LoginActivity;
 
 public class SplashActivity extends AppCompatActivity{
 
@@ -31,7 +33,7 @@ public class SplashActivity extends AppCompatActivity{
             if (activityWeakReference.get() != null) {
                 SplashActivity splashActivity = activityWeakReference.get();
                 // Start home activity
-                splashActivity.startActivity(new Intent(splashActivity, HomeActivity.class));
+                splashActivity.startActivity(new Intent(splashActivity, LoginActivity.class));
                 // close splash activity
                 splashActivity.finish();
             }
