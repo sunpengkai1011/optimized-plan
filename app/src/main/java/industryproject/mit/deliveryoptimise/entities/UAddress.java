@@ -11,6 +11,7 @@ public class UAddress implements Serializable{
     private String street;
     private int type;
     private String typeName;
+    private int order;
 
     public UAddress() {
     }
