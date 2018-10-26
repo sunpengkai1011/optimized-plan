@@ -10,6 +10,9 @@ import com.google.gson.Gson;
 
 import java.lang.reflect.Type;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import industryproject.mit.deliveryoptimise.Constants;
 
@@ -103,5 +106,14 @@ public class GeneralUtil {
     public static String getDataFromSP(Context context, String key){
         SharedPreferences preferences = context.getSharedPreferences(Constants.SP_KEY, Context.MODE_PRIVATE);
         return preferences.getString(key, "");
+    }
+
+    public static String getCurrentTime(long time){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.ENGLISH);
+        return simpleDateFormat.format(new Date(time));
+    }
+
+    public static int calculateTime(long start_time, long end_time){
+        return msToMinutes((int)(end_time - start_time));
     }
 }

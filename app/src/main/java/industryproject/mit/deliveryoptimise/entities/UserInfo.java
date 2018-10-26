@@ -2,6 +2,8 @@ package industryproject.mit.deliveryoptimise.entities;
 
 import java.io.Serializable;
 
+import industryproject.mit.deliveryoptimise.entities.parcel.UAddress;
+
 public class UserInfo implements Serializable{
     private String userId;
     private String userName;

@@ -19,19 +19,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import industryproject.mit.deliveryoptimise.R;
-import industryproject.mit.deliveryoptimise.entities.Bound;
-import industryproject.mit.deliveryoptimise.entities.LegInfo;
-import industryproject.mit.deliveryoptimise.entities.RouteInfo;
-import industryproject.mit.deliveryoptimise.entities.StepInfo;
+import industryproject.mit.deliveryoptimise.entities.map.Bound;
+import industryproject.mit.deliveryoptimise.entities.map.LegInfo;
+import industryproject.mit.deliveryoptimise.entities.map.RouteInfo;
+import industryproject.mit.deliveryoptimise.entities.map.StepInfo;
 
 public class MapUtil {
 
     public static GoogleMap addMarkers(GoogleMap map, List<LegInfo> legs){
         for (LegInfo info: legs) {
-            map.addMarker(new MarkerOptions().position(info.getStart_location().getLocation()).snippet(info.getStart_address()));
+            map.addMarker(new MarkerOptions().position(info.getStart_location().getLocation()).title(info.getStart_address()));
         }
         LegInfo last = legs.get(legs.size() - 1);
-        map.addMarker(new MarkerOptions().position(last.getEnd_location().getLocation()).snippet(last.getEnd_address()));
+        map.addMarker(new MarkerOptions().position(last.getEnd_location().getLocation()).title(last.getEnd_address()));
         return map;
     }
 

@@ -12,7 +12,7 @@ import android.widget.Toast;
 import industryproject.mit.deliveryoptimise.BaseActivity;
 import industryproject.mit.deliveryoptimise.Constants;
 import industryproject.mit.deliveryoptimise.R;
-import industryproject.mit.deliveryoptimise.entities.UAddress;
+import industryproject.mit.deliveryoptimise.entities.parcel.UAddress;
 import industryproject.mit.deliveryoptimise.entities.UserInfo;
 import industryproject.mit.deliveryoptimise.presenter.register.RegisterPresenterImpl;
 import industryproject.mit.deliveryoptimise.view.login.LoginActivity;

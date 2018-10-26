@@ -1,4 +1,4 @@
-package industryproject.mit.deliveryoptimise.entities;
+package industryproject.mit.deliveryoptimise.entities.map;
 
 import java.io.Serializable;
 

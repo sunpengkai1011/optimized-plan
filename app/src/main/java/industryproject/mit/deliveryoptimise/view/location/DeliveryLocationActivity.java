@@ -15,10 +15,10 @@ import java.util.List;
 import industryproject.mit.deliveryoptimise.BaseActivity;
 import industryproject.mit.deliveryoptimise.Constants;
 import industryproject.mit.deliveryoptimise.R;
+import industryproject.mit.deliveryoptimise.entities.parcel.DeliveryLocations;
 import industryproject.mit.deliveryoptimise.view.map.MapActivity;
 import industryproject.mit.deliveryoptimise.adapter.LocationsAdapter;
-import industryproject.mit.deliveryoptimise.entities.RouteResponse;
-import industryproject.mit.deliveryoptimise.entities.UAddress;
+import industryproject.mit.deliveryoptimise.entities.parcel.UAddress;
 import industryproject.mit.deliveryoptimise.entities.UserInfo;
 import industryproject.mit.deliveryoptimise.presenter.location.DeliveryLocationPresenterImpl;
 
@@ -29,7 +29,7 @@ public class DeliveryLocationActivity extends BaseActivity implements IDeliveryL
     private LocationsAdapter adapter;
     private Button btn_map;
     private DeliveryLocationPresenterImpl deliveryLocationPresenter;
-    private List<UAddress> addresses;
+    private DeliveryLocations locations;
     private UserInfo userInfo;
 
     @Override
@@ -70,10 +70,18 @@ public class DeliveryLocationActivity extends BaseActivity implements IDeliveryL
     }
 
     @Override
-    public void getDeliveryLocations(List<UAddress> addresses) {
-        this.addresses = addresses;
-        adapter = new LocationsAdapter(this, addresses);
-        rv_locations.setLayoutManager(new LinearLayoutManager(this));
+    public void getDeliveryLocations(DeliveryLocations locations) {
+        this.locations = locations;
+        adapter = new LocationsAdapter(this, locations);
+        rv_locations.setLayoutManager(new LinearLayoutManager(this){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
+        rv_locations.setHasFixedSize(true);
+        rv_locations.setNestedScrollingEnabled(false);
+        rv_locations.setFocusable(false);
         rv_locations.setAdapter(adapter);
     }
 
@@ -83,9 +91,8 @@ public class DeliveryLocationActivity extends BaseActivity implements IDeliveryL
     }
 
     private void intentToMap(){
-        ArrayList<UAddress> list = (ArrayList<UAddress>) addresses;
         Intent intent = new Intent(DeliveryLocationActivity.this, MapActivity.class);
-        intent.putExtra(Constants.KEY_INTENT_ADDRESSES, list);
+        intent.putExtra(Constants.KEY_INTENT_ADDRESSES, locations);
         startActivity(intent);
     }
 }

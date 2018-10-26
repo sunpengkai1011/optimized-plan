@@ -1,6 +1,6 @@
 package industryproject.mit.deliveryoptimise.network;
 
-import industryproject.mit.deliveryoptimise.entities.RouteResponse;
+import industryproject.mit.deliveryoptimise.entities.network.RouteResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;

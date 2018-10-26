@@ -36,5 +36,6 @@
         <activity android:name=".view.map.MapActivity"/>
         <activity android:name=".view.login.LoginActivity"/>
         <activity android:name=".view.register.RegisterActivity"/>
+        <activity android:name=".view.map.RouteDetailActivity"/>
     </application>
 </manifest>

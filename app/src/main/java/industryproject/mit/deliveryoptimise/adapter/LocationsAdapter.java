@@ -2,20 +2,19 @@ package industryproject.mit.deliveryoptimise.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.List;
 
 import industryproject.mit.deliveryoptimise.R;
-import industryproject.mit.deliveryoptimise.entities.UAddress;
+import industryproject.mit.deliveryoptimise.entities.parcel.DeliveryLocations;
+import industryproject.mit.deliveryoptimise.entities.parcel.UAddress;
 
 public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.LocationViewHolder> implements View.OnClickListener{
-    private List<UAddress> addresses;
+    private DeliveryLocations locations;
     private Context mContext;
     private int type;
     private OnItemClickListener listener;
@@ -31,8 +30,8 @@ public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.Loca
         void onItemClick(View view, int position);
     }
 
-    public LocationsAdapter(Context context, List<UAddress> addresses){
-        this.addresses = addresses;
+    public LocationsAdapter(Context context, DeliveryLocations locations){
+        this.locations = locations;
         mContext = context;
         this.type = type;
     }
@@ -51,8 +50,7 @@ public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.Loca
 
     @Override
     public void onBindViewHolder(LocationViewHolder holder, int position) {
-        holder.tv_location.setText(addresses.get(position).toString());
-        holder.tv_location_type.setText(addresses.get(position).getTypeName());
+        holder.tv_location.setText(locations.getWayPoints().get(position).toString());
     }
 
     @Override
@@ -62,16 +60,15 @@ public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.Loca
 
     @Override
     public int getItemCount() {
-        return addresses.size();
+        return locations.getWayPoints().size();
     }
 
     class LocationViewHolder extends RecyclerView.ViewHolder{
-        TextView tv_location, tv_location_type;
+        TextView tv_location;
 
         public LocationViewHolder(View itemView) {
             super(itemView);
             tv_location = itemView.findViewById(R.id.tv_location);
-            tv_location_type = itemView.findViewById(R.id.tv_location_type);
         }
     }
 }

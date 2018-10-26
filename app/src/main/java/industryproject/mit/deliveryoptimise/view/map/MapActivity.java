@@ -1,8 +1,7 @@
 package industryproject.mit.deliveryoptimise.view.map;
 
 import android.Manifest;
-import android.app.Dialog;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -24,19 +23,15 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import industryproject.mit.deliveryoptimise.BaseActivity;
 import industryproject.mit.deliveryoptimise.Constants;
 import industryproject.mit.deliveryoptimise.R;
 import industryproject.mit.deliveryoptimise.adapter.LegRouteAdapter;
-import industryproject.mit.deliveryoptimise.entities.LegInfo;
-import industryproject.mit.deliveryoptimise.entities.RouteResponse;
-import industryproject.mit.deliveryoptimise.entities.UAddress;
+import industryproject.mit.deliveryoptimise.entities.map.RouteStored;
+import industryproject.mit.deliveryoptimise.entities.network.RouteResponse;
+import industryproject.mit.deliveryoptimise.entities.parcel.DeliveryLocations;
 import industryproject.mit.deliveryoptimise.presenter.map.MapPresenterImpl;
 import industryproject.mit.deliveryoptimise.utils.GeneralUtil;
 import industryproject.mit.deliveryoptimise.utils.MapUtil;
@@ -44,9 +39,9 @@ import industryproject.mit.deliveryoptimise.utils.PermissionUtil;
 
 public class MapActivity extends BaseActivity implements
         IMapView, GoogleMap.OnMapLoadedCallback, RecyclerViewPager.OnPageChangedListener,
-        GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener, OnMapReadyCallback,
-        GoogleApiClient.OnConnectionFailedListener, GoogleMap.OnMarkerClickListener,
-        GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener{
+        GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener,
+        OnMapReadyCallback, GoogleApiClient.OnConnectionFailedListener, GoogleMap.OnMapClickListener,
+        GoogleMap.OnMapLongClickListener, LegRouteAdapter.OnItemClickListener{
     private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClient;
 
@@ -56,17 +51,18 @@ public class MapActivity extends BaseActivity implements
     private CardView cv_route_info;
     private RelativeLayout lyt_back, lyt_navigate;
     private RecyclerViewPager rvp_routes;
-    private List<UAddress> addresses;
+    private DeliveryLocations locations;
     private RouteResponse response;
 
     private int currentLeg = 0;
+    private RouteStored routeStored;
 
     private MapPresenterImpl mapPresenter;
     private boolean isLoaded = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        addresses = (ArrayList<UAddress>) getIntent().getExtras().getSerializable(Constants.KEY_INTENT_ADDRESSES);
+        locations = (DeliveryLocations) getIntent().getExtras().getSerializable(Constants.KEY_INTENT_ADDRESSES);
         super.onCreate(savedInstanceState);
     }
 
@@ -89,7 +85,7 @@ public class MapActivity extends BaseActivity implements
         lyt_back.setVisibility(View.VISIBLE);
 
         mapPresenter = new MapPresenterImpl(this, this);
-        mapPresenter.requestOptimiseRoutes(addresses);
+        mapPresenter.requestOptimiseRoutes(locations);
 
         rvp_routes = findViewById(R.id.rvp_routes);
 
@@ -144,7 +140,6 @@ public class MapActivity extends BaseActivity implements
         mMap.getUiSettings().setMapToolbarEnabled(false);
         mMap.setOnMyLocationButtonClickListener(this);
         mMap.setOnMyLocationClickListener(this);
-        mMap.setOnMarkerClickListener(this);
         mMap.setOnMapClickListener(this);
         mMap.setOnMapLongClickListener(this);
         mMap.setOnMapLoadedCallback(this);
@@ -168,50 +163,21 @@ public class MapActivity extends BaseActivity implements
     }
 
     @Override
-    public boolean onMarkerClick(Marker marker) {
-        final Marker currentMarker = marker;
-        GeneralUtil.mapMarkerDialog(this, marker.getSnippet(), getResources().getString(R.string.btnMessage_depart), new Dialog.OnClickListener(){
+    public void onItemClick(View view, int position) {
+        Intent intent = new Intent(MapActivity.this, RouteDetailActivity.class);
+        intent.putExtra(Constants.KEY_INTENT_ROUTESTORED, routeStored);
+        intent.putExtra(Constants.KEY_INTENT_POSITION, position);
+        startActivityForResult(intent, Constants.INTNET_REUQEST_MAP_TO_DEATIL);
+    }
 
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                Toast.makeText(MapActivity.this, "depart", Toast.LENGTH_SHORT).show();
-                if (Constants.realTime_depart.containsKey(currentMarker.getId()) &&
-                        Constants.realTime_depart.get(currentMarker.getId()) != 0){
-                    GeneralUtil.twoBtnDialog(MapActivity.this, getResources().getString(R.string.btnMessage_depart_clicked),
-                            getResources().getString(R.string.btnMessage_sure),
-                            new Dialog.OnClickListener(){
-
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    Constants.realTime_depart.put(currentMarker.getId(), System.currentTimeMillis());
-                                }
-                            },
-                            getResources().getString(R.string.btnMessage_cancel),
-                            new Dialog.OnClickListener(){
-
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-
-                                }
-                            });
-                }else {
-                    Constants.realTime_depart.put(currentMarker.getId(), System.currentTimeMillis());
-                }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (RESULT_OK == resultCode){
+            if (Constants.INTNET_REUQEST_MAP_TO_DEATIL == requestCode){
+                routeStored = mapPresenter.refreshRouteStored();
             }
-        }, getResources().getString(R.string.btnMessage_arrive), new Dialog.OnClickListener(){
-
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                Toast.makeText(MapActivity.this, "arrive", Toast.LENGTH_SHORT).show();
-            }
-        }, getResources().getString(R.string.btnMessage_cancel), new Dialog.OnClickListener(){
-
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-            }
-        }).show();
-        return false;
+        }
     }
 
     @Override
@@ -264,6 +230,7 @@ public class MapActivity extends BaseActivity implements
         }
         rvp_routes.setLayoutManager(new LinearLayoutManager(this, LinearLayout.HORIZONTAL, false));
         LegRouteAdapter adapter = new LegRouteAdapter(this, response.getRoutes().get(0).getLegs());
+        adapter.setOnItemClickListener(this);
         rvp_routes.addOnPageChangedListener(this);
         rvp_routes.setAdapter(adapter);
 
@@ -273,6 +240,7 @@ public class MapActivity extends BaseActivity implements
         tv_distance.setText("The total distance is : " + GeneralUtil.mToKm(distanceAndDuration[0]));
 
         mapPresenter.drawMarkerAndRoute(mMap, response);
+        mapPresenter.routeStored(response);
     }
 
     @Override
@@ -280,6 +248,15 @@ public class MapActivity extends BaseActivity implements
         Toast.makeText(this, "Routes request failed", Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void routesStored(RouteStored routeStored) {
+        this.routeStored = routeStored;
+    }
+
+    @Override
+    public void routesStoredError() {
+
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,

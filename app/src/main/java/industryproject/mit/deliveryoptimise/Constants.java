@@ -15,6 +15,7 @@ public class Constants {
     public static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
 
     public static final String SP_KEY = "CLEANING_SERVICE";
+    public static final String SP_KEY_ROUTES = "ROUTES";
 
     //Response code
     public static final int RESPONSE_CODE_SUCCESSFUL = 100;
@@ -23,7 +24,15 @@ public class Constants {
     //Intent
     public static final String KEY_INTENT_USERINFO = "userinfo";
     public static final String KEY_INTENT_ADDRESSES = "addresses";
+    public static final String KEY_INTENT_ROUTESTORED = "route_stored";
+    public static final String KEY_INTENT_POSITION = "position";
+    public static final int INTNET_REUQEST_MAP_TO_DEATIL = 200;
     public static final int INTENT_REQUEST_LOGIN_TO_REGISTER = 202;
+
+    //Status
+    public static final int STATUS_INIT = 0;
+    public static final int STATUS_DEPARTED = 1;
+    public static final int STATUS_ARRIVED = 2;
 
     public static Map<String, Long> realTime_depart = new HashMap<>();
     public static Map<String, Long> realTime_arrive = new HashMap<>();
@@ -31,4 +40,8 @@ public class Constants {
     public static final int TYPE_LOCATION_ORIGIN = 1;
     public static final int TYPE_LOCATION_DESTINATION = 2;
     public static final int TYPE_LOCATION_WAYPOINT = 3;
+
+    public static final String TYPE_NAME_ORIGIN = "origin";
+    public static final String TYPE_NAME_DESTINATION = "destination";
+    public static final String TYPE_NAME_WAYPOINT = "way point";
 }

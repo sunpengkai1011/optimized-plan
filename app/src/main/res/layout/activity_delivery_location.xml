@@ -1,23 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <include android:id="@+id/title_bar"
-        layout="@layout/view_title_bar"/>
+    <include
+        android:id="@+id/title_bar"
+        layout="@layout/view_title_bar" />
 
     <Button
         android:id="@+id/btn_map"
         style="@style/general_button"
-        android:text="Optimise Routes"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="15dp"
+        android:text="Optimise Routes" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_locations"
-        android:layout_below="@+id/title_bar"
-        android:layout_above="@+id/btn_map"
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_above="@+id/btn_map"
+        android:layout_below="@+id/title_bar">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_title_origin"
+                style="@style/location_title"
+                android:text="ORIGIN :" />
+
+            <TextView
+                android:id="@+id/tv_origin"
+                style="@style/location_text"
+                android:layout_below="@id/tv_title_origin"
+                android:text="Manukau Station, Auckland" />
+
+            <TextView
+                android:id="@+id/tv_title_destination"
+                style="@style/location_title"
+                android:layout_below="@id/tv_origin"
+                android:text="DESTINATION :" />
+
+            <TextView
+                android:id="@+id/tv_destination"
+                style="@style/location_text"
+                android:layout_below="@id/tv_title_destination"
+                android:text="Manukau Station, Auckland" />
+
+            <TextView
+                android:id="@+id/tv_title_waypoint"
+                style="@style/location_title"
+                android:layout_below="@id/tv_destination"
+                android:text="WAY POINTS :" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_locations"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/tv_title_waypoint" />
+        </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
 </RelativeLayout>

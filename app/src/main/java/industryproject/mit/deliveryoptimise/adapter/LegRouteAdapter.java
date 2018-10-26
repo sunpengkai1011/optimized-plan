@@ -10,11 +10,12 @@ import android.widget.TextView;
 import java.util.List;
 
 import industryproject.mit.deliveryoptimise.R;
-import industryproject.mit.deliveryoptimise.entities.LegInfo;
+import industryproject.mit.deliveryoptimise.entities.map.LegInfo;
 
-public class LegRouteAdapter extends RecyclerView.Adapter<LegRouteAdapter.LegRouteViewHolder>{
+public class LegRouteAdapter extends RecyclerView.Adapter<LegRouteAdapter.LegRouteViewHolder> implements View.OnClickListener{
     private Context mContext;
     private List<LegInfo> legs;
+    private OnItemClickListener listener;
 
     public LegRouteAdapter(Context context, List<LegInfo> legs){
         mContext = context;
@@ -22,9 +23,21 @@ public class LegRouteAdapter extends RecyclerView.Adapter<LegRouteAdapter.LegRou
     }
 
     @Override
+    public void onClick(View view) {
+        if (listener != null){
+            listener.onItemClick(view, (Integer) view.getTag());
+        }
+    }
+
+    public interface OnItemClickListener{
+        void onItemClick(View view, int position);
+    }
+
+    @Override
     public LegRouteViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_leg_route, parent, false);
         LegRouteViewHolder viewHolder = new LegRouteViewHolder(view);
+        view.setOnClickListener(this);
         return viewHolder;
     }
 
@@ -35,6 +48,10 @@ public class LegRouteAdapter extends RecyclerView.Adapter<LegRouteAdapter.LegRou
         holder.tv_distance.setText(legs.get(position).getDistance().getText());
         holder.tv_duration.setText(legs.get(position).getDuration().getText());
         holder.itemView.setTag(position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.listener = listener;
     }
 
     @Override

@@ -1,12 +1,24 @@
-package industryproject.mit.deliveryoptimise.entities;
+package industryproject.mit.deliveryoptimise.entities.network;
 
 import java.io.Serializable;
 import java.util.List;
 
+import industryproject.mit.deliveryoptimise.entities.parcel.UAddress;
+import industryproject.mit.deliveryoptimise.entities.parcel.WayPoint;
+
 public class RouteRequestInfo implements Serializable {
     private String origin;
     private String destination;
-    private List<UAddress> way_points;
+    private List<WayPoint> way_points;
+
+    public RouteRequestInfo() {
+    }
+
+    public RouteRequestInfo(String origin, String destination, List<WayPoint> way_points) {
+        this.origin = origin;
+        this.destination = destination;
+        this.way_points = way_points;
+    }
 
     public String getOrigin() {
         return origin;
@@ -24,17 +36,17 @@ public class RouteRequestInfo implements Serializable {
         this.destination = destination;
     }
 
-    public List<UAddress> getWayPoints() {
+    public List<WayPoint> getWayPoints() {
         return way_points;
     }
 
-    public void setWayPoints(List<UAddress> way_points) {
+    public void setWayPoints(List<WayPoint> way_points) {
         this.way_points = way_points;
     }
 
     public String getWaypointsStr(){
         String way_point = "optimize:true|";
-        for (UAddress item: way_points){
+        for (WayPoint item: way_points){
             way_point = way_point + item.toString() + "|";
         }
         String result = way_point.substring(0, way_point.length()-1);

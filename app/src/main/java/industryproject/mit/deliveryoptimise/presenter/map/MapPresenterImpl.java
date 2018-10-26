@@ -3,24 +3,27 @@ package industryproject.mit.deliveryoptimise.presenter.map;
 import android.content.Context;
 
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
 
 import java.util.List;
 
-import industryproject.mit.deliveryoptimise.entities.LegInfo;
-import industryproject.mit.deliveryoptimise.entities.RouteResponse;
-import industryproject.mit.deliveryoptimise.entities.UAddress;
+import industryproject.mit.deliveryoptimise.entities.map.LegInfo;
+import industryproject.mit.deliveryoptimise.entities.map.LegStored;
+import industryproject.mit.deliveryoptimise.entities.map.RouteStored;
+import industryproject.mit.deliveryoptimise.entities.network.RouteResponse;
+import industryproject.mit.deliveryoptimise.entities.parcel.DeliveryLocations;
+import industryproject.mit.deliveryoptimise.entities.parcel.UAddress;
 import industryproject.mit.deliveryoptimise.model.map.IMap;
 import industryproject.mit.deliveryoptimise.model.map.MapModel;
 import industryproject.mit.deliveryoptimise.network.RequestCallBack;
 import industryproject.mit.deliveryoptimise.utils.MapUtil;
 import industryproject.mit.deliveryoptimise.view.map.IMapView;
+import industryproject.mit.deliveryoptimise.view.map.IRouteStroedView;
 
 public class MapPresenterImpl implements IMapPresenter, RequestCallBack{
     private IMap iMap;
     private IMapView iMapView;
     private Context context;
-    private List<Integer> waypoint_order;
+    private IRouteStroedView iRouteStroedView;
 
     public MapPresenterImpl(Context context, IMapView iMapView) {
         this.iMapView = iMapView;
@@ -28,9 +31,15 @@ public class MapPresenterImpl implements IMapPresenter, RequestCallBack{
         this.context = context;
     }
 
+    public MapPresenterImpl(Context context, IRouteStroedView iRouteStroedView) {
+        this.context = context;
+        iMap = new MapModel(context, this);
+        this.iRouteStroedView = iRouteStroedView;
+    }
+
     @Override
-    public void requestOptimiseRoutes(List<UAddress> addresses) {
-        iMap.requestOptimiseRoutes(addresses);
+    public void requestOptimiseRoutes(DeliveryLocations locations) {
+        iMap.requestOptimiseRoutes(locations);
     }
 
     @Override
@@ -58,6 +67,39 @@ public class MapPresenterImpl implements IMapPresenter, RequestCallBack{
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void departedTimeStored(long departed_time, int position) {
+        if (iMap.departedTimeStored(departed_time, position)){
+            iRouteStroedView.departedTimeStored();
+        }else{
+            iRouteStroedView.departedTimeStoredError();
+        }
+    }
+
+    @Override
+    public void arrivedTimeStored(long arrived_time, int position) {
+        if (iMap.arrivedTimeStored(arrived_time, position)){
+            iRouteStroedView.arrivedTimeStored();
+        }else{
+            iRouteStroedView.arrivedTimeStoredError();
+        }
+    }
+
+    @Override
+    public void routeStored(RouteResponse response) {
+        RouteStored routeStored = iMap.routeStored(response);
+        if (routeStored != null){
+            iMapView.routesStored(routeStored);
+        }else{
+            iMapView.routesStoredError();
+        }
+    }
+
+    @Override
+    public RouteStored refreshRouteStored() {
+        return iMap.refreshRouteStored();
     }
 
     @Override

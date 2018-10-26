@@ -1,4 +1,4 @@
-package industryproject.mit.deliveryoptimise.entities;
+package industryproject.mit.deliveryoptimise.entities.parcel;
 
 import android.text.TextUtils;
 import android.view.TextureView;
@@ -9,9 +9,6 @@ public class UAddress implements Serializable{
     private String city;
     private String suburb;
     private String street;
-    private int type;
-    private String typeName;
-    private int order;
 
     public UAddress() {
     }
@@ -20,14 +17,6 @@ public class UAddress implements Serializable{
         this.city = city;
         this.suburb = suburb;
         this.street = street;
-    }
-
-    public UAddress(String city, String suburb, String street, int type, String typeName) {
-        this.city = city;
-        this.suburb = suburb;
-        this.street = street;
-        this.type = type;
-        this.typeName = typeName;
     }
 
     public String getCity() {
@@ -61,22 +50,6 @@ public class UAddress implements Serializable{
             street = "";
         }
         this.street = street;
-    }
-
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
-
-    public String getTypeName() {
-        return typeName;
-    }
-
-    public void setTypeName(String typeName) {
-        this.typeName = typeName;
     }
 
     @Override
