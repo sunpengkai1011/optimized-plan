@@ -11,6 +11,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -48,11 +50,11 @@ public class MapActivity extends BaseActivity implements
     private boolean mPermissionDenied = false;
 
     private TextView tv_title, tv_num_markers, tv_distance, tv_duration;
-    private CardView cv_route_info;
-    private RelativeLayout lyt_back, lyt_navigate;
+    private RelativeLayout lyt_back, lyt_navigate, lyt_route_info;
     private RecyclerViewPager rvp_routes;
     private DeliveryLocations locations;
     private RouteResponse response;
+    private Animation animation_in, animation_out;
 
     private int currentLeg = 0;
     private RouteStored routeStored;
@@ -72,7 +74,7 @@ public class MapActivity extends BaseActivity implements
         tv_title = findViewById(R.id.tv_title);
         lyt_back = findViewById(R.id.lyt_back);
         lyt_navigate = findViewById(R.id.lyt_navigate);
-        cv_route_info = findViewById(R.id.cv_route_info);
+        lyt_route_info = findViewById(R.id.lyt_route_info);
         tv_num_markers = findViewById(R.id.tv_num_markers);
         tv_distance = findViewById(R.id.tv_distance);
         tv_duration = findViewById(R.id.tv_duration);
@@ -83,6 +85,8 @@ public class MapActivity extends BaseActivity implements
         lyt_navigate.setVisibility(View.VISIBLE);
         tv_title.setText(R.string.title_act_map);
         lyt_back.setVisibility(View.VISIBLE);
+        animation_in = AnimationUtils.loadAnimation(this, R.anim.anim_view_in);
+        animation_out = AnimationUtils.loadAnimation(this, R.anim.anim_view_out);
 
         mapPresenter = new MapPresenterImpl(this, this);
         mapPresenter.requestOptimiseRoutes(locations);
@@ -105,6 +109,38 @@ public class MapActivity extends BaseActivity implements
     protected void initListener(){
         lyt_back.setOnClickListener(this);
         lyt_navigate.setOnClickListener(this);
+        animation_out.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                lyt_route_info.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        animation_in.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                lyt_route_info.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
     }
 
     @Override
@@ -188,10 +224,10 @@ public class MapActivity extends BaseActivity implements
 
     @Override
     public void onMapClick(LatLng latLng) {
-        if (cv_route_info.getVisibility() == View.VISIBLE){
-            cv_route_info.setVisibility(View.GONE);
+        if (View.VISIBLE == lyt_route_info.getVisibility()){
+            lyt_route_info.startAnimation(animation_out);
         }else {
-            cv_route_info.setVisibility(View.VISIBLE);
+            lyt_route_info.startAnimation(animation_in);
         }
         if (View.VISIBLE == rvp_routes.getVisibility()){
             if (mapPresenter.drawMarkerAndRoute(mMap, response)){
@@ -211,7 +247,7 @@ public class MapActivity extends BaseActivity implements
                 rvp_routes.setVisibility(View.VISIBLE);
             }
         }
-        cv_route_info.setVisibility(View.GONE);
+        lyt_route_info.setVisibility(View.GONE);
     }
 
     @Override
@@ -234,10 +270,10 @@ public class MapActivity extends BaseActivity implements
         rvp_routes.addOnPageChangedListener(this);
         rvp_routes.setAdapter(adapter);
 
-        tv_num_markers.setText("The total delivery locations are : " + response.getRoutes().get(0).getLegs().size());
+        tv_num_markers.setText("There are " +  response.getRoutes().get(0).getLegs().size() + " delivery locations");
         int[] distanceAndDuration = mapPresenter.getDurationAndDistance(response);
-        tv_duration.setText("The total duration is : " + GeneralUtil.secondToMinutes(distanceAndDuration[1]));
-        tv_distance.setText("The total distance is : " + GeneralUtil.mToKm(distanceAndDuration[0]));
+        tv_duration.setText("The estimated time spent: " + GeneralUtil.secondToMinutes(distanceAndDuration[1]));
+        tv_distance.setText("The distance: " + GeneralUtil.mToKm(distanceAndDuration[0]));
 
         mapPresenter.drawMarkerAndRoute(mMap, response);
         mapPresenter.routeStored(response);

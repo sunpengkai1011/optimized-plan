@@ -1,8 +1,12 @@
 package industryproject.mit.deliveryoptimise.view.login;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Paint;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,7 +28,18 @@ public class LoginActivity extends BaseActivity implements ILoginView{
 
     private LoginPresenterImpl loginPresenterImpl;
 
+    private boolean isQuit = false;
+
     private UserInfo userInfo;
+
+    @SuppressLint("HandlerLeak")
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            isQuit = false;
+        }
+    };
 
     @Override
     protected void initView() {
@@ -98,5 +113,22 @@ public class LoginActivity extends BaseActivity implements ILoginView{
                 this.finish();
                 break;
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            //If click the Back key twice in 2 seconds, the program exits
+            if (!isQuit) {
+                isQuit = true;
+                Toast.makeText(getApplicationContext(), "Press the return key again to exit the program!",
+                        Toast.LENGTH_SHORT).show();
+                mHandler.sendEmptyMessageDelayed(0, 2000);
+            } else {
+                finish();
+                System.exit(0);
+            }
+        }
+        return false;
     }
 }

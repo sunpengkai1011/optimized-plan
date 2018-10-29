@@ -1,8 +1,12 @@
 package industryproject.mit.deliveryoptimise.view.location;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -32,6 +36,16 @@ public class DeliveryLocationActivity extends BaseActivity implements IDeliveryL
     private DeliveryLocations locations;
     private UserInfo userInfo;
 
+    private boolean isQuit = false;
+
+    @SuppressLint("HandlerLeak")
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            isQuit = false;
+        }
+    };
     @Override
     protected void initView() {
         setContentView(R.layout.activity_delivery_location);
@@ -94,5 +108,22 @@ public class DeliveryLocationActivity extends BaseActivity implements IDeliveryL
         Intent intent = new Intent(DeliveryLocationActivity.this, MapActivity.class);
         intent.putExtra(Constants.KEY_INTENT_ADDRESSES, locations);
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            //If click the Back key twice in 2 seconds, the program exits
+            if (!isQuit) {
+                isQuit = true;
+                Toast.makeText(getApplicationContext(), "Press the return key again to exit the program!",
+                        Toast.LENGTH_SHORT).show();
+                mHandler.sendEmptyMessageDelayed(0, 2000);
+            } else {
+                finish();
+                System.exit(0);
+            }
+        }
+        return false;
     }
 }

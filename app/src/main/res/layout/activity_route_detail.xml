@@ -55,6 +55,7 @@
             <TextView
                 android:id="@+id/tv_distance"
                 style="@style/location_text"
+                android:gravity="right"
                 android:layout_below="@id/tv_title_distance"
                 android:text="15 KM" />
 
@@ -68,6 +69,7 @@
                 android:id="@+id/tv_duration"
                 style="@style/location_text"
                 android:layout_below="@id/tv_title_duration"
+                android:gravity="right"
                 android:text="20 MINS" />
 
             <RelativeLayout
@@ -79,13 +81,13 @@
                 <TextView
                     android:id="@+id/tv_title_departed"
                     style="@style/location_title"
-
                     android:text="DEPARTED TIME :" />
 
                 <TextView
                     android:id="@+id/tv_departed"
                     style="@style/location_text"
                     android:layout_below="@id/tv_title_departed"
+                    android:gravity="right"
                     android:text="09/11/2018 16:00" />
             </RelativeLayout>
 
@@ -104,6 +106,7 @@
                     android:id="@+id/tv_arrived"
                     style="@style/location_text"
                     android:layout_below="@id/tv_title_arrived"
+                    android:gravity="right"
                     android:text="09/11/2018 16:00" />
             </RelativeLayout>
 
@@ -122,6 +125,7 @@
                     android:id="@+id/tv_spent"
                     style="@style/location_text"
                     android:layout_below="@id/tv_title_spent"
+                    android:gravity="right"
                     android:text="10 MINS" />
             </RelativeLayout>
         </RelativeLayout>
