@@ -5,6 +5,9 @@ import android.view.TextureView;
 
 import java.io.Serializable;
 
+/**
+ * The address entity
+ */
 public class UAddress implements Serializable{
     private String city;
     private String suburb;

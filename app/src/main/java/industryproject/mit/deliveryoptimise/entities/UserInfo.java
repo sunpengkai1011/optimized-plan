@@ -4,6 +4,9 @@ import java.io.Serializable;
 
 import industryproject.mit.deliveryoptimise.entities.parcel.UAddress;
 
+/**
+ * The user information entity.
+ */
 public class UserInfo implements Serializable{
     private String userId;
     private String userName;

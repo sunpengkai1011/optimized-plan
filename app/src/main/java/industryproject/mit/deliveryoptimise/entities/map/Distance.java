@@ -2,6 +2,9 @@ package industryproject.mit.deliveryoptimise.entities.map;
 
 import java.io.Serializable;
 
+/**
+ * For storing the distance for route.
+ */
 public class Distance implements Serializable{
 
     private String text;

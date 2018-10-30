@@ -13,38 +13,23 @@ import industryproject.mit.deliveryoptimise.R;
 import industryproject.mit.deliveryoptimise.entities.parcel.DeliveryLocations;
 import industryproject.mit.deliveryoptimise.entities.parcel.UAddress;
 
-public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.LocationViewHolder> implements View.OnClickListener{
+/**
+ * For display the delivery locations
+ */
+public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.LocationViewHolder>{
     private DeliveryLocations locations;
     private Context mContext;
-    private int type;
-    private OnItemClickListener listener;
-
-    @Override
-    public void onClick(View view) {
-        if (listener != null){
-            listener.onItemClick(view, (int) view.getTag());
-        }
-    }
-
-    public interface OnItemClickListener{
-        void onItemClick(View view, int position);
-    }
 
     public LocationsAdapter(Context context, DeliveryLocations locations){
         this.locations = locations;
         mContext = context;
-        this.type = type;
-    }
-
-    public void setOnItemClickListener(OnItemClickListener listener){
-        this.listener = listener;
     }
 
     @Override
     public LocationViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        //Load the layout
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_location, parent, false);
         LocationViewHolder viewHolder = new LocationViewHolder(view);
-        view.setOnClickListener(this);
         return viewHolder;
     }
 

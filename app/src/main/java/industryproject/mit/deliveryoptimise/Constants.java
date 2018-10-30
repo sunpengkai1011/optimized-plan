@@ -5,6 +5,9 @@ import java.util.Map;
 
 import industryproject.mit.deliveryoptimise.entities.UserInfo;
 
+/**
+ * Defining the constant
+ */
 public class Constants {
     public static UserInfo userInfo;
 

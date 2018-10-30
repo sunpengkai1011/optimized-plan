@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * For storing the data of every route in local
+ */
 public class RouteStored implements Serializable{
     List<LegStored> legStoreds;
 

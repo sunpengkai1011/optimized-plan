@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Delivery locations entity.
+ */
 public class DeliveryLocations implements Serializable{
     private Origin origin;
     private Destination destination;

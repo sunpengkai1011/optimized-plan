@@ -4,4 +4,5 @@ import industryproject.mit.deliveryoptimise.entities.UserInfo;
 
 public interface ILoginView {
     void loginResult(UserInfo userInfo, int code);
+    void registerResult(UserInfo userInfo, int code);
 }

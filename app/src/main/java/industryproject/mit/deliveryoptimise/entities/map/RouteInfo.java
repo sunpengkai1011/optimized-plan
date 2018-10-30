@@ -3,6 +3,9 @@ package industryproject.mit.deliveryoptimise.entities.map;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * For storing the data of all routes.
+ */
 public class RouteInfo implements Serializable{
     private Bound bounds;
     private List<LegInfo> legs;

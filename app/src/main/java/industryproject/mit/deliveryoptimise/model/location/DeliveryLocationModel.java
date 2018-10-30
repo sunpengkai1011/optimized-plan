@@ -10,6 +10,9 @@ import industryproject.mit.deliveryoptimise.entities.parcel.Destination;
 import industryproject.mit.deliveryoptimise.entities.parcel.Origin;
 import industryproject.mit.deliveryoptimise.entities.parcel.WayPoint;
 
+/**
+ * It is the Model in MVP pattern. For get the data about the delivery locations.
+ */
 public class DeliveryLocationModel implements IDeliveryLocation {
     private Context context;
 
@@ -22,6 +25,10 @@ public class DeliveryLocationModel implements IDeliveryLocation {
         return testData();
     }
 
+    /**
+     * It is the test data.
+     * @return test delivery locations.
+     */
     private DeliveryLocations testData(){
         Origin origin = new Origin("Auckland", "Manukau City", "Manukau Station");
         Destination destination = new Destination("Auckland", "Manukau City", "Manukau Station");

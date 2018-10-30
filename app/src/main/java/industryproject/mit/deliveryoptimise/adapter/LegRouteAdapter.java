@@ -12,6 +12,9 @@ import java.util.List;
 import industryproject.mit.deliveryoptimise.R;
 import industryproject.mit.deliveryoptimise.entities.map.LegInfo;
 
+/**
+ * For displaying the information of the every route.
+ */
 public class LegRouteAdapter extends RecyclerView.Adapter<LegRouteAdapter.LegRouteViewHolder> implements View.OnClickListener{
     private Context mContext;
     private List<LegInfo> legs;
@@ -29,20 +32,26 @@ public class LegRouteAdapter extends RecyclerView.Adapter<LegRouteAdapter.LegRou
         }
     }
 
+    /**
+     * Create the interface for listen the item clicked event.
+     */
     public interface OnItemClickListener{
         void onItemClick(View view, int position);
     }
 
     @Override
     public LegRouteViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        //Load the layout
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_leg_route, parent, false);
         LegRouteViewHolder viewHolder = new LegRouteViewHolder(view);
+        //Set the clicked listener for view.
         view.setOnClickListener(this);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(LegRouteViewHolder holder, int position) {
+        //Initialise the view.
         holder.tv_origin.setText(legs.get(position).getStart_address());
         holder.tv_destination.setText(legs.get(position).getEnd_address());
         holder.tv_distance.setText(legs.get(position).getDistance().getText());

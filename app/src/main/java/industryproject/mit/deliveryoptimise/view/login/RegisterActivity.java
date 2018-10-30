@@ -1,4 +1,4 @@
-package industryproject.mit.deliveryoptimise.view.register;
+package industryproject.mit.deliveryoptimise.view.login;
 
 import android.content.Intent;
 import android.text.TextUtils;
@@ -14,17 +14,16 @@ import industryproject.mit.deliveryoptimise.Constants;
 import industryproject.mit.deliveryoptimise.R;
 import industryproject.mit.deliveryoptimise.entities.parcel.UAddress;
 import industryproject.mit.deliveryoptimise.entities.UserInfo;
-import industryproject.mit.deliveryoptimise.presenter.register.RegisterPresenterImpl;
-import industryproject.mit.deliveryoptimise.view.login.LoginActivity;
+import industryproject.mit.deliveryoptimise.presenter.login.LoginPresenterImpl;
 
 
-public class RegisterActivity extends BaseActivity implements IRegisterView {
+public class RegisterActivity extends BaseActivity implements ILoginView {
     private TextView tv_title;
     private EditText et_username, et_password, et_confirm_pwd, et_city, et_suburb, et_street;
     private Button btn_register;
     private RelativeLayout lyt_back;
 
-    private RegisterPresenterImpl registerPresenter;
+    private LoginPresenterImpl registerPresenter;
 
     @Override
     protected void initView() {
@@ -47,7 +46,7 @@ public class RegisterActivity extends BaseActivity implements IRegisterView {
     protected void initData() {
         tv_title.setText(R.string.title_register);
         lyt_back.setVisibility(View.VISIBLE);
-        registerPresenter = new RegisterPresenterImpl(this, this);
+        registerPresenter = new LoginPresenterImpl(this, this);
     }
 
     @Override
@@ -66,6 +65,10 @@ public class RegisterActivity extends BaseActivity implements IRegisterView {
                 this.finish();
                 break;
         }
+    }
+
+    @Override
+    public void loginResult(UserInfo userInfo, int code) {
     }
 
     @Override

@@ -4,6 +4,9 @@ import java.io.Serializable;
 
 import industryproject.mit.deliveryoptimise.Constants;
 
+/**
+ * The way point entity
+ */
 public class WayPoint extends UAddress implements Serializable{
     private int type;
     private String type_name;

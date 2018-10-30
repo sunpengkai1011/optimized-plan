@@ -13,9 +13,11 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * For the route request.
+ */
 public class RouteRequest {
-
-    private RequestCallBack mCallBack;
+    private RequestCallBack mCallBack; //The call back of the route request
     private LoadingDialog dialog;
     private String origin;
     private String destination;
@@ -31,6 +33,7 @@ public class RouteRequest {
 
     public void getRequest(){
         dialog.show();
+        //Use the Retrofit to send the request.
         Retrofit retrofit = new Retrofit.Builder().baseUrl(Constants.GoogleMap_BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
 
         RouteService request = retrofit.create(RouteService.class);
@@ -38,12 +41,14 @@ public class RouteRequest {
         call.enqueue(new Callback<RouteResponse>() {
             @Override
             public void onResponse(Call<RouteResponse> call, Response<RouteResponse> response) {
+                //The request successful and call the callback method.
                 dialog.dismiss();
                 mCallBack.requestCallBack(response.body());
             }
 
             @Override
             public void onFailure(Call<RouteResponse> call, Throwable t) {
+                //The request failed and call the callback method.
                 dialog.dismiss();
                 mCallBack.requestFailure(call);
             }

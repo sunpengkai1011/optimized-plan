@@ -3,6 +3,9 @@ package industryproject.mit.deliveryoptimise.entities.map;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * For storing the data of every route.
+ */
 public class LegInfo implements Serializable {
     private Distance distance;
     private Duration duration;

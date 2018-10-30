@@ -4,6 +4,9 @@ import java.io.Serializable;
 
 import industryproject.mit.deliveryoptimise.Constants;
 
+/**
+ * The destination entity.
+ */
 public class Destination extends UAddress implements Serializable{
     private int type;
     private String type_name;

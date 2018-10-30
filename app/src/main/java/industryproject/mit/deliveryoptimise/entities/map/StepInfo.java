@@ -2,6 +2,9 @@ package industryproject.mit.deliveryoptimise.entities.map;
 
 import java.io.Serializable;
 
+/**
+ * For storing the data of every step.
+ */
 public class StepInfo implements Serializable {
     private Distance distance;
     private Duration duration;

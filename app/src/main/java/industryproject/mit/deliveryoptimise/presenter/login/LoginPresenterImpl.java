@@ -30,4 +30,18 @@ public class LoginPresenterImpl implements ILoginPresenter {
             iLoginView.loginResult(new UserInfo(), Constants.RESPONSE_CODE_FAIL);
         }
     }
+
+    @Override
+    public void doRegister(UserInfo userInfo) {
+        if (userInfo != null) {
+            iUserLogin = new UserLoginModel(context);
+            if (iUserLogin.register(userInfo)) {
+                iLoginView.registerResult(iUserLogin.getUserInfo(userInfo.getUserName()), Constants.RESPONSE_CODE_SUCCESSFUL);
+            } else {
+                iLoginView.registerResult(userInfo, Constants.RESPONSE_CODE_FAIL);
+            }
+        }else{
+            iLoginView.registerResult(new UserInfo(), Constants.RESPONSE_CODE_FAIL);
+        }
+    }
 }

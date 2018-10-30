@@ -2,6 +2,9 @@ package industryproject.mit.deliveryoptimise.entities.map;
 
 import java.io.Serializable;
 
+/**
+ * For storing the estimated time spent of the route.
+ */
 public class Duration implements Serializable{
     private String text;
     private int value;

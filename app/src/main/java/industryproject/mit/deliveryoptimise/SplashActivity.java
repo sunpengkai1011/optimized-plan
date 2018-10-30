@@ -10,13 +10,16 @@ import java.lang.ref.WeakReference;
 
 import industryproject.mit.deliveryoptimise.view.login.LoginActivity;
 
+/**
+ *  The starting page
+ */
 public class SplashActivity extends AppCompatActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //Execute the handler program after a second
-        new MyHandler(new WeakReference(this)).sendEmptyMessageDelayed(0, 1000);
+        //Execute the handler program after 2 second
+        new MyHandler(new WeakReference(this)).sendEmptyMessageDelayed(0, 2000);
     }
 
     static class MyHandler extends Handler {
@@ -32,7 +35,7 @@ public class SplashActivity extends AppCompatActivity{
 
             if (activityWeakReference.get() != null) {
                 SplashActivity splashActivity = activityWeakReference.get();
-                // Start home activity
+                // Start login activity
                 splashActivity.startActivity(new Intent(splashActivity, LoginActivity.class));
                 // close splash activity
                 splashActivity.finish();

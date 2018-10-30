@@ -2,6 +2,9 @@ package industryproject.mit.deliveryoptimise.entities.map;
 
 import java.util.List;
 
+/**
+ * For storing the data and real status of every route in local.
+ */
 public class LegStored extends LegInfo {
     private long depart_time;
     private long arrive_time;

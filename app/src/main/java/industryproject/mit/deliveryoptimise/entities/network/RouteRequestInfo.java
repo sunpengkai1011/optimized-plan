@@ -6,6 +6,9 @@ import java.util.List;
 import industryproject.mit.deliveryoptimise.entities.parcel.UAddress;
 import industryproject.mit.deliveryoptimise.entities.parcel.WayPoint;
 
+/**
+ * For create the route request info.
+ */
 public class RouteRequestInfo implements Serializable {
     private String origin;
     private String destination;
@@ -50,8 +53,8 @@ public class RouteRequestInfo implements Serializable {
             way_point = way_point + item.toString() + "|";
         }
         String result = way_point.substring(0, way_point.length()-1);
+        result = result.replace(", ", "+");
         result = result.replace(" ", "+");
-        result = result.replace(",", "+");
         return result;
     }
 }

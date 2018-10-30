@@ -19,7 +19,6 @@ import industryproject.mit.deliveryoptimise.R;
 import industryproject.mit.deliveryoptimise.entities.UserInfo;
 import industryproject.mit.deliveryoptimise.presenter.login.LoginPresenterImpl;
 import industryproject.mit.deliveryoptimise.view.location.DeliveryLocationActivity;
-import industryproject.mit.deliveryoptimise.view.register.RegisterActivity;
 
 public class LoginActivity extends BaseActivity implements ILoginView{
     private TextView tv_title, tv_to_register;
@@ -113,6 +112,11 @@ public class LoginActivity extends BaseActivity implements ILoginView{
                 this.finish();
                 break;
         }
+    }
+
+    @Override
+    public void registerResult(UserInfo userInfo, int code) {
+
     }
 
     @Override

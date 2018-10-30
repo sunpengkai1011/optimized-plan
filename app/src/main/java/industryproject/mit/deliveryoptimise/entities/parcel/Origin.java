@@ -4,6 +4,9 @@ import java.io.Serializable;
 
 import industryproject.mit.deliveryoptimise.Constants;
 
+/**
+ * The origin entity.
+ */
 public class Origin extends UAddress  implements Serializable {
     private int type;
     private String type_name;

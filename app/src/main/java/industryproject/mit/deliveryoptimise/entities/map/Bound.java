@@ -2,6 +2,9 @@ package industryproject.mit.deliveryoptimise.entities.map;
 
 import java.io.Serializable;
 
+/**
+ * For storing the display area data of map.
+ */
 public class Bound implements Serializable{
     private Location northeast;
     private Location southwest;
