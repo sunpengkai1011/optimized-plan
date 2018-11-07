@@ -9,6 +9,9 @@ import industryproject.mit.deliveryoptimise.entities.UserInfo;
 import industryproject.mit.deliveryoptimise.network.service.UserService;
 import io.reactivex.Single;
 
+/**
+ * The request of registration.
+ */
 public class RegisterRequest extends BaseRequest<UserService, RegisterResponse, RegisterResponse> {
     private UserInfo userInfo;
 

@@ -16,9 +16,8 @@ import io.reactivex.Single;
 
 
 /**
- * Created by wendychen on 11/12/17.
+ * The request of sign in.
  */
-
 public class SigninRequest extends BaseRequest<UserService, LoginResponse, LoginResponse> {
     private String userName, password;
 

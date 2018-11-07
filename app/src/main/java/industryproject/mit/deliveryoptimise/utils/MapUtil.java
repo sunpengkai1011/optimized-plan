@@ -26,6 +26,12 @@ import industryproject.mit.deliveryoptimise.entities.map.StepInfo;
 
 public class MapUtil {
 
+    /**
+     * Added the markers on map.
+     * @param map map entity
+     * @param legs route information
+     * @return
+     */
     public static GoogleMap addMarkers(GoogleMap map, List<LegInfo> legs){
         for (LegInfo info: legs) {
             map.addMarker(new MarkerOptions().position(info.getStart_location().getLocation()).title(info.getStart_address()));
@@ -35,12 +41,27 @@ public class MapUtil {
         return map;
     }
 
+    /**
+     * Set the display area.
+     * @param map map entity
+     * @param context
+     * @param bound display area
+     * @param padding
+     * @return
+     */
     public static GoogleMap displayArea(GoogleMap map, Context context, Bound bound, int padding){
         LatLngBounds bounds = new LatLngBounds.Builder().include(bound.getNortheast().getLocation()).include(bound.getSouthwest().getLocation()).build();
         map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, GeneralUtil.dip2px(context, padding)));
         return map;
     }
 
+    /**
+     * Draw the routes
+     * @param map map entity
+     * @param context
+     * @param legs route information
+     * @return
+     */
     @SuppressLint("ResourceType")
     public static GoogleMap drawRoute(GoogleMap map, Context context, List<LegInfo> legs){
         List<LatLng> points = new ArrayList<>();
@@ -56,6 +77,14 @@ public class MapUtil {
         return map;
     }
 
+    /**
+     * Draw the route
+     * @param map map entity
+     * @param context
+     * @param legs route information
+     * @param position The route position that will display in route list.
+     * @return
+     */
     @SuppressLint("ResourceType")
     public static GoogleMap drawRoute(GoogleMap map, Context context, List<LegInfo> legs, int position){
         List<LatLng> points = new ArrayList<>();
@@ -68,6 +97,11 @@ public class MapUtil {
         return map;
     }
 
+    /**
+     * Open the Google Maps and send the information to navigate.
+     * @param context
+     * @param routeInfo
+     */
     public static void intentToGoogleMap(Context context, RouteInfo routeInfo){
         String uri = "https://www.google.com/maps/dir/?api=1&";
         for(int i = 0; i < routeInfo.getLegs().size(); i++){

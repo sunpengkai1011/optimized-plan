@@ -10,7 +10,7 @@ import industryproject.mit.deliveryoptimise.presenter.user.LoginPresenterImpl;
 import industryproject.mit.deliveryoptimise.view.user.ILoginView;
 
 /**
- * It is the Model in MVP pattern. For operating the data about the login.
+ * It is the Model in MVP pattern. For operating the data about the user information.
  */
 public class UserLoginModel implements IUserLogin {
     private Context context;

@@ -54,7 +54,9 @@ public class LoginActivity extends BaseActivity implements ILoginView{
 
     @Override
     protected void initData() {
+        //Set the title text.
         tv_title.setText(getResources().getString(R.string.title_login));
+        //Add the under line.
         tv_to_register.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
         loginPresenterImpl = new LoginPresenterImpl(this, this);
     }

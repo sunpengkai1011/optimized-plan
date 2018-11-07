@@ -57,6 +57,10 @@ public abstract class BaseRequest<T, R, M> {
         dialog = GeneralUtil.getWaitDialog(context, "waiting");
     }
 
+    /**
+     * Get the request observer entity
+     * @return
+     */
     public PublishSubject<M> getData() {
         dialog.show();
         endpoint = RetrofitUtil.getService(getHeader(), getUrl(), getEndpointClass());
@@ -66,6 +70,10 @@ public abstract class BaseRequest<T, R, M> {
         return observer;
     }
 
+    /**
+     * The succeed request callback.
+     * @param response
+     */
     private void dealSuccess(R response) {
         dialog.dismiss();
         if (response != null) {
@@ -91,6 +99,10 @@ public abstract class BaseRequest<T, R, M> {
         }
     }
 
+    /**
+     * The failed request callback.
+     * @param throwable
+     */
     private void dealError(Throwable throwable) {
         dialog.dismiss();
         Timber.d(throwable, "getData error");

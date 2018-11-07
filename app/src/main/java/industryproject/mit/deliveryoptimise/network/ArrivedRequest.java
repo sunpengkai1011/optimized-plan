@@ -9,12 +9,14 @@ import industryproject.mit.deliveryoptimise.network.service.AddressService;
 import io.reactivex.Single;
 
 /**
- * The request of getting delivery addresses.
+ * The departure request.
  */
-public class DeliveryAddressesRequest extends BaseRequest<AddressService, DeliveryAddressesResponse, DeliveryAddressesResponse> {
+public class ArrivedRequest extends BaseRequest<AddressService, DeliveryAddressesResponse, DeliveryAddressesResponse> {
+    private int id;
 
-    public DeliveryAddressesRequest(Context context) {
+    public ArrivedRequest(Context context, int id) {
         super(context);
+        this.id = id;
     }
 
     @Override
@@ -29,7 +31,7 @@ public class DeliveryAddressesRequest extends BaseRequest<AddressService, Delive
 
     @Override
     protected Single<DeliveryAddressesResponse> getEndpoint(AddressService endpoint) {
-        return endpoint.getDeliveryAddresses();
+        return endpoint.requestArrived(id);
     }
 
     @Override

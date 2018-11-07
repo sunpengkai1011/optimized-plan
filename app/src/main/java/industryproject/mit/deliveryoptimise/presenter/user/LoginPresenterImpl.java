@@ -37,6 +37,7 @@ public class LoginPresenterImpl implements ILoginPresenter {
 
     @Override
     public void loginResult(LoginResponse response) {
+        //Determine whether the response is empty, and call the corresponding method.
         if (response == null){
             iLoginView.loginResult(null, "Login failed");
         }else{
@@ -50,6 +51,7 @@ public class LoginPresenterImpl implements ILoginPresenter {
 
     @Override
     public void registerResult(RegisterResponse response) {
+        //Determine whether the response is empty, and call the corresponding method.
         if (response == null){
             iLoginView.loginResult(null, "Register failed");
         }else {
@@ -64,6 +66,7 @@ public class LoginPresenterImpl implements ILoginPresenter {
 
     @Override
     public void editResult(LoginResponse response) {
+        //Determine whether the response is empty, and call the corresponding method.
         if (response == null){
             iLoginView.loginResult(null, "User information edits failed");
         }else {

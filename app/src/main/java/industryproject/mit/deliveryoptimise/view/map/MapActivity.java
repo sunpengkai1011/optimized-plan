@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.view.animation.Animation;
@@ -39,7 +38,11 @@ import industryproject.mit.deliveryoptimise.presenter.map.MapPresenterImpl;
 import industryproject.mit.deliveryoptimise.utils.GeneralUtil;
 import industryproject.mit.deliveryoptimise.utils.MapUtil;
 import industryproject.mit.deliveryoptimise.utils.PermissionUtil;
+import industryproject.mit.deliveryoptimise.view.location.RouteDetailActivity;
 
+/**
+ * Map page
+ */
 public class MapActivity extends BaseActivity implements
         IMapView, GoogleMap.OnMapLoadedCallback, RecyclerViewPager.OnPageChangedListener,
         GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener,
@@ -66,6 +69,7 @@ public class MapActivity extends BaseActivity implements
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        //Get the addresses information from last page.
         locations = (DeliveryLocations) getIntent().getExtras().getSerializable(Constants.KEY_INTENT_ADDRESSES);
         super.onCreate(savedInstanceState);
     }
@@ -85,22 +89,28 @@ public class MapActivity extends BaseActivity implements
 
     @Override
     protected void initData(){
+        //Display the right button of title bar.
         lyt_right.setVisibility(View.VISIBLE);
+        //Set the right button image.
         iv_icon.setImageResource(R.drawable.logo_navigation);
+        //Set the title text.
         tv_title.setText(R.string.title_act_map);
+        //Display the back button.
         lyt_back.setVisibility(View.VISIBLE);
+        //Define the animation.
         animation_in = AnimationUtils.loadAnimation(this, R.anim.anim_view_in);
         animation_out = AnimationUtils.loadAnimation(this, R.anim.anim_view_out);
 
         mapPresenter = new MapPresenterImpl(this, this);
+        //Start to request the optimised routes.
         mapPresenter.requestOptimiseRoutes(locations);
 
         rvp_routes = findViewById(R.id.rvp_routes);
 
+        //Google map setting
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.frg_map);
         mapFragment.getMapAsync(this);
-
         if (mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder(this)
                     .addOnConnectionFailedListener(this)
@@ -113,6 +123,7 @@ public class MapActivity extends BaseActivity implements
     protected void initListener(){
         lyt_back.setOnClickListener(this);
         lyt_right.setOnClickListener(this);
+        //Set the animation listener.
         animation_out.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -197,6 +208,7 @@ public class MapActivity extends BaseActivity implements
                 MapActivity.this.finish();
                 break;
             case R.id.lyt_right:
+                //Open the Google Maps
                 MapUtil.intentToGoogleMap(MapActivity.this, response.getRoutes().get(0));
                 break;
         }
@@ -204,20 +216,10 @@ public class MapActivity extends BaseActivity implements
 
     @Override
     public void onItemClick(View view, int position) {
+        //Go to route detail page.
         Intent intent = new Intent(MapActivity.this, RouteDetailActivity.class);
-        intent.putExtra(Constants.KEY_INTENT_ROUTESTORED, routeStored);
-        intent.putExtra(Constants.KEY_INTENT_POSITION, position);
-        startActivityForResult(intent, Constants.INTNET_REUQEST_MAP_TO_DEATIL);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (RESULT_OK == resultCode){
-            if (Constants.INTNET_REUQEST_MAP_TO_DEATIL == requestCode){
-                routeStored = mapPresenter.refreshRouteStored();
-            }
-        }
+        intent.putExtra(Constants.KEY_INTENT_LEG, response.getRoutes().get(0).getLegs().get(position) );
+        startActivity(intent);
     }
 
     @Override
@@ -286,16 +288,6 @@ public class MapActivity extends BaseActivity implements
     @Override
     public void routeResponseError() {
         Toast.makeText(this, "Routes request failed", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void routesStored(RouteStored routeStored) {
-        this.routeStored = routeStored;
-    }
-
-    @Override
-    public void routesStoredError() {
-
     }
 
     @Override

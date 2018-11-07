@@ -151,6 +151,10 @@ public class GeneralUtil {
         return msToMinutes((int)(end_time - start_time));
     }
 
+    /**
+     * Get the Gson entity.
+     * @return gson entity
+     */
     public static Gson getGson() {
         return new GsonBuilder().serializeNulls().create();
     }

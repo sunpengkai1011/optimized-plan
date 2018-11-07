@@ -22,7 +22,7 @@ import industryproject.mit.deliveryoptimise.presenter.user.LoginPresenterImpl;
 import industryproject.mit.deliveryoptimise.view.location.DeliveryAddressesActivity;
 
 public class UserEditActivity extends BaseActivity implements ILoginView {
-    private TextView tv_title, tv_username, tv_user_role, tv_phone_number, tv_email;
+    private TextView tv_title, tv_username, tv_phone_number, tv_email;
     private EditText et_phone_number, et_email;
     private Button btn_commit;
     private ImageView iv_icon;
@@ -38,7 +38,6 @@ public class UserEditActivity extends BaseActivity implements ILoginView {
         setContentView(R.layout.activity_user_info);
         tv_title = findViewById(R.id.tv_title);
         tv_username = findViewById(R.id.tv_username);
-        tv_user_role = findViewById(R.id.tv_user_role);
         tv_phone_number = findViewById(R.id.tv_phone_number);
         tv_email = findViewById(R.id.tv_email);
 
@@ -57,7 +56,9 @@ public class UserEditActivity extends BaseActivity implements ILoginView {
 
     @Override
     public void initData() {
+        //Set the title text.
         tv_title.setText(getResources().getString(R.string.title_info));
+        //Display the back button.
         lyt_back.setVisibility(View.VISIBLE);
         setTextToEditView();
         meEditPresenter = new LoginPresenterImpl(this, this);
@@ -85,6 +86,7 @@ public class UserEditActivity extends BaseActivity implements ILoginView {
                 }
                 break;
             case R.id.lyt_right:
+                //Determine the page showed according to the edit status, and show the corresponding page.
                 if (isEdit){
                     lyt_user.setVisibility(View.GONE);
                     lyt_edit.setVisibility(View.VISIBLE);
@@ -137,6 +139,9 @@ public class UserEditActivity extends BaseActivity implements ILoginView {
     }
 
 
+    /**
+     * Display the user information
+     */
     private void setTextToEditView(){
         lyt_right.setVisibility(View.VISIBLE);
         iv_icon.setImageResource(R.drawable.icon_edit);
@@ -153,15 +158,21 @@ public class UserEditActivity extends BaseActivity implements ILoginView {
         et_email.setText(userInfo.getEmail());
     }
 
+    /**
+     * Edit the user information.
+     */
     private void editUserInfo(){
         String phoneNumber = et_phone_number.getText().toString().trim();
         String email = et_email.getText().toString().trim();
 
+        //Determine whether the texts are empty
         if (!TextUtils.isEmpty(phoneNumber) && !TextUtils.isEmpty(email)){
             userInfo.setPhone(phoneNumber);
             userInfo.setEmail(email);
+            //Start to send the user information edit request
             meEditPresenter.editUserInfo(userInfo);
         }else {
+            //If the text is empty, show the corresponding prompt.
             if (TextUtils.isEmpty(phoneNumber)){
                 Toast.makeText(this, getResources().getString(R.string.toast_phone), Toast.LENGTH_SHORT).show();
             }else if (TextUtils.isEmpty(email)){

@@ -126,6 +126,21 @@ public class DeliveryAddressesActivity extends BaseActivity implements IDelivery
         }
     }
 
+    @Override
+    public void getAddressResult(DeliveryAddress address, String message) {
+
+    }
+
+    @Override
+    public void departureResult(DeliveryAddress address, String message) {
+
+    }
+
+    @Override
+    public void arrivedResult(DeliveryAddress address, String message) {
+
+    }
+
     private void intentToMap(){
         Intent intent = new Intent(DeliveryAddressesActivity.this, MapActivity.class);
         intent.putExtra(Constants.KEY_INTENT_ADDRESSES, deliveryLocations);

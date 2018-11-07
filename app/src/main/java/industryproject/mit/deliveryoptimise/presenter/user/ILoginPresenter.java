@@ -5,7 +5,7 @@ import industryproject.mit.deliveryoptimise.entities.network.RegisterResponse;
 import industryproject.mit.deliveryoptimise.entities.UserInfo;
 
 /**
- * The presenter which related with sign-in
+ * The presenter which related with user information
  */
 public interface ILoginPresenter {
     /**

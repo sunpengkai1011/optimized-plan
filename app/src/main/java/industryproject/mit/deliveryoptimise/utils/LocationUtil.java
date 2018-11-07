@@ -18,7 +18,7 @@ import java.util.Locale;
 public class LocationUtil {
 
     /**
-     * Get the lng and lat
+     * Get my location address.
      *
      * @param context
      * @return
@@ -40,6 +40,11 @@ public class LocationUtil {
     }
 
 
+    /**
+     * Get the lng and lat by network.
+     * @param context
+     * @return
+     */
     @SuppressLint("MissingPermission")
     private static Location getLngAndLatWithNetwork(Context context) {
         LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
@@ -71,6 +76,12 @@ public class LocationUtil {
         }
     };
 
+    /**
+     * Get the address information according to location.
+     * @param context
+     * @param location location information
+     * @return
+     */
     private static String getAddress(Context context, Location location) {
         String currentPosition = "";
         Geocoder gc = new Geocoder(context, Locale.ENGLISH);

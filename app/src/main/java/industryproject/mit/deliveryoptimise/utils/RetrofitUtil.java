@@ -24,6 +24,12 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class RetrofitUtil {
 
+    /**
+     * Get the Retrofit entity to request
+     * @param header request header
+     * @param baseUrl request base url
+     * @return
+     */
     private static Retrofit getDefaultRetrofit(Map<String, String> header, @NonNull String baseUrl) {
         OkHttpClient.Builder httpClientBuilder = getOkHttpClientBuilder(header);
         OkHttpClient client = httpClientBuilder.build();
@@ -40,6 +46,12 @@ public class RetrofitUtil {
                 .addConverterFactory(GsonConverterFactory.create(GeneralUtil.getGson())).build();
     }
 
+    /**
+     * Get the Retrofit entity to request
+     * @param header request header
+     * @param baseUrl request base url
+     * @return
+     */
     private static Retrofit getStringRetrofit(Map<String, String> header, @NonNull String baseUrl) {
         OkHttpClient.Builder httpClientBuilder = getOkHttpClientBuilder(header);
         OkHttpClient client = httpClientBuilder.build();
@@ -56,6 +68,11 @@ public class RetrofitUtil {
                 .addConverterFactory(ScalarsConverterFactory.create()).build();
     }
 
+    /**
+     * Get the OkHttpClient entity
+     * @param header request header
+     * @return
+     */
     private static OkHttpClient.Builder getOkHttpClientBuilder(final Map<String, String> header) {
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
@@ -85,6 +102,14 @@ public class RetrofitUtil {
         return httpClientBuilder;
     }
 
+    /**
+     * Get the service entity
+     * @param header request header
+     * @param baseUrl request base url
+     * @param serviceClass service type
+     * @param <S>
+     * @return
+     */
     public static <S> S getService(Map<String, String> header, String baseUrl, Class<S> serviceClass) {
         return getDefaultRetrofit(header, baseUrl).create(serviceClass);
     }

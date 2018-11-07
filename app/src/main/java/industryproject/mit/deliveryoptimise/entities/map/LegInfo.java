@@ -7,6 +7,7 @@ import java.util.List;
  * For storing the data of every route.
  */
 public class LegInfo implements Serializable {
+    private int id;
     private Distance distance;
     private Duration duration;
     private String end_address;
@@ -26,6 +27,14 @@ public class LegInfo implements Serializable {
         this.start_address = start_address;
         this.start_location = start_location;
         this.steps = steps;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Distance getDistance() {

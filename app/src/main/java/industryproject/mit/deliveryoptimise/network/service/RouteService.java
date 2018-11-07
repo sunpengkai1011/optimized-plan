@@ -5,6 +5,9 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
+/**
+ * The request service for route request.
+ */
 public interface RouteService {
 
     @GET("maps/api/directions/json")

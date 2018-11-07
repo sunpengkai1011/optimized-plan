@@ -2,6 +2,9 @@ package industryproject.mit.deliveryoptimise.view.user;
 
 import industryproject.mit.deliveryoptimise.entities.UserInfo;
 
+/**
+ * The view is related with user information.
+ */
 public interface ILoginView {
     /**
      * The callback of login request

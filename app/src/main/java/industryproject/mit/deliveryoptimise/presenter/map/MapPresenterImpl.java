@@ -15,11 +15,13 @@ import industryproject.mit.deliveryoptimise.utils.MapUtil;
 import industryproject.mit.deliveryoptimise.view.map.IMapView;
 import industryproject.mit.deliveryoptimise.view.map.IRouteStroedView;
 
+/**
+ * The implementation of "IMapPresenter"
+ */
 public class MapPresenterImpl implements IMapPresenter, RequestCallBack{
     private IMap iMap;
     private IMapView iMapView;
     private Context context;
-    private IRouteStroedView iRouteStroedView;
 
     public MapPresenterImpl(Context context, IMapView iMapView) {
         this.iMapView = iMapView;
@@ -27,14 +29,9 @@ public class MapPresenterImpl implements IMapPresenter, RequestCallBack{
         this.context = context;
     }
 
-    public MapPresenterImpl(Context context, IRouteStroedView iRouteStroedView) {
-        this.context = context;
-        iMap = new MapModel(context, this);
-        this.iRouteStroedView = iRouteStroedView;
-    }
-
     @Override
     public void requestOptimiseRoutes(DeliveryLocations locations) {
+        //start to request the optimised routes
         iMap.requestOptimiseRoutes(locations);
     }
 
@@ -66,39 +63,6 @@ public class MapPresenterImpl implements IMapPresenter, RequestCallBack{
     }
 
     @Override
-    public void departedTimeStored(long departed_time, int position) {
-        if (iMap.departedTimeStored(departed_time, position)){
-            iRouteStroedView.departedTimeStored();
-        }else{
-            iRouteStroedView.departedTimeStoredError();
-        }
-    }
-
-    @Override
-    public void arrivedTimeStored(long arrived_time, int position) {
-        if (iMap.arrivedTimeStored(arrived_time, position)){
-            iRouteStroedView.arrivedTimeStored();
-        }else{
-            iRouteStroedView.arrivedTimeStoredError();
-        }
-    }
-
-    @Override
-    public void routeStored(RouteResponse response) {
-        RouteStored routeStored = iMap.routeStored(response);
-        if (routeStored != null){
-            iMapView.routesStored(routeStored);
-        }else{
-            iMapView.routesStoredError();
-        }
-    }
-
-    @Override
-    public RouteStored refreshRouteStored() {
-        return iMap.refreshRouteStored();
-    }
-
-    @Override
     public void requestCallBack(Object o) {
         iMapView.routeResponse((RouteResponse) o);
     }
@@ -108,6 +72,11 @@ public class MapPresenterImpl implements IMapPresenter, RequestCallBack{
         iMapView.routeResponseError();
     }
 
+    /**
+     * Get the total duration and distance of all routes
+     * @param response the response of optimised routes
+     * @return
+     */
     private int[] getTotalDistanceAndDuration(RouteResponse response){
         int totalDuration = 0;
         int totalDistance = 0;

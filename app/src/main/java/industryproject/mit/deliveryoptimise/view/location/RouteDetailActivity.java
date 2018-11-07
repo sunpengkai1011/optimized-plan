@@ -1,28 +1,30 @@
-package industryproject.mit.deliveryoptimise.view.map;
+package industryproject.mit.deliveryoptimise.view.location;
 
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.List;
 
 import industryproject.mit.deliveryoptimise.BaseActivity;
 import industryproject.mit.deliveryoptimise.Constants;
 import industryproject.mit.deliveryoptimise.R;
-import industryproject.mit.deliveryoptimise.entities.map.LegStored;
-import industryproject.mit.deliveryoptimise.entities.map.RouteStored;
-import industryproject.mit.deliveryoptimise.presenter.map.MapPresenterImpl;
-import industryproject.mit.deliveryoptimise.utils.GeneralUtil;
+import industryproject.mit.deliveryoptimise.entities.map.LegInfo;
+import industryproject.mit.deliveryoptimise.entities.parcel.DeliveryAddress;
+import industryproject.mit.deliveryoptimise.presenter.address.DeliveryAddressPresenterImpl;
 
-public class RouteDetailActivity extends BaseActivity implements IRouteStroedView {
+public class RouteDetailActivity extends BaseActivity implements IDeliveryAddressesView {
     private TextView tv_title, tv_origin, tv_destination, tv_distance, tv_duration,
             tv_departed, tv_arrived, tv_spent;
     private RelativeLayout lyt_back, lyt_departed, lyt_arrived, lyt_spent;
     private Button btn_time;
-    private MapPresenterImpl mapPresenter;
-    private RouteStored routeStored;
-    private LegStored legStored;
-    private int position;
+    private ScrollView sv_all;
+    private DeliveryAddressPresenterImpl presenter;
+    private LegInfo legInfo;
+    private DeliveryAddress deliveryAddress;
 
     @Override
     protected void initView() {
@@ -40,6 +42,7 @@ public class RouteDetailActivity extends BaseActivity implements IRouteStroedVie
         lyt_arrived = findViewById(R.id.lyt_arrived);
         lyt_spent = findViewById(R.id.lyt_spent);
         btn_time = findViewById(R.id.btn_time);
+        sv_all = findViewById(R.id.sv_all);
 
     }
 
@@ -47,17 +50,15 @@ public class RouteDetailActivity extends BaseActivity implements IRouteStroedVie
     protected void initData() {
         tv_title.setText("ROUTE DETAIL");
         lyt_back.setVisibility(View.VISIBLE);
-        routeStored = (RouteStored) getIntent().getSerializableExtra(Constants.KEY_INTENT_ROUTESTORED);
-        position = getIntent().getIntExtra(Constants.KEY_INTENT_POSITION, 0);
-        legStored = routeStored.getLegStoreds().get(position);
-
-        tv_origin.setText(legStored.getStart_address());
-        tv_destination.setText(legStored.getEnd_address());
-        tv_distance.setText(legStored.getDistance().getText());
-        tv_duration.setText(legStored.getDuration().getText());
-
+        legInfo = (LegInfo) getIntent().getSerializableExtra(Constants.KEY_INTENT_LEG);
+        viewOfAll(View.GONE);
+        tv_origin.setText(legInfo.getStart_address());
+        tv_destination.setText(legInfo.getEnd_address());
+        tv_distance.setText(legInfo.getDistance().getText());
+        tv_duration.setText(legInfo.getDuration().getText());
+        presenter = new DeliveryAddressPresenterImpl(this, this);
+        presenter.getDeliveryAddress(legInfo.getId());
         viewByStatus();
-        mapPresenter = new MapPresenterImpl(this,this);
     }
 
     @Override
@@ -73,69 +74,78 @@ public class RouteDetailActivity extends BaseActivity implements IRouteStroedVie
                 this.finish();
                 break;
             case R.id.btn_time:
-                switch (legStored.getStatus()){
+                switch (deliveryAddress.getStatus()){
                     case Constants.STATUS_INIT:
-                        mapPresenter.departedTimeStored(System.currentTimeMillis(), position);
+                        presenter.requsetDeparture(deliveryAddress.getId());
                         break;
                     case Constants.STATUS_DEPARTED:
-                        mapPresenter.arrivedTimeStored(System.currentTimeMillis(), position);
+                        presenter.requestArrived(deliveryAddress.getId());
                         break;
                 }
                 break;
         }
     }
 
-    @Override
-    public void departedTimeStored() {
-        Toast.makeText(this, "Departed", Toast.LENGTH_SHORT).show();
-        setResult(RESULT_OK);
-        this.finish();
-    }
-
-    @Override
-    public void departedTimeStoredError() {
-        Toast.makeText(this, "Request Failed", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void arrivedTimeStored() {
-        Toast.makeText(this, "Arrived", Toast.LENGTH_SHORT).show();
-        setResult(RESULT_OK);
-        this.finish();
-    }
-
-    @Override
-    public void arrivedTimeStoredError() {
-        Toast.makeText(this, "Request Failed", Toast.LENGTH_SHORT).show();
-    }
-
     private void viewByStatus() {
-        if (legStored != null)
-        switch (legStored.getStatus()){
+        if (deliveryAddress != null)
+        switch (deliveryAddress.getStatus()){
             case Constants.STATUS_INIT:
                 lyt_departed.setVisibility(View.GONE);
                 lyt_arrived.setVisibility(View.GONE);
                 lyt_spent.setVisibility(View.GONE);
-                tv_departed.setText(GeneralUtil.getCurrentTime(legStored.getDepart_time()));
                 btn_time.setText("Departed");
                 break;
             case Constants.STATUS_DEPARTED:
                 lyt_departed.setVisibility(View.VISIBLE);
                 lyt_arrived.setVisibility(View.GONE);
                 lyt_spent.setVisibility(View.GONE);
-                tv_departed.setText(GeneralUtil.getCurrentTime(legStored.getDepart_time()));
-                tv_arrived.setText(GeneralUtil.getCurrentTime(legStored.getArrive_time()));
+//                tv_departed.setText();
                 btn_time.setText("Arrived");
                 break;
             case Constants.STATUS_ARRIVED:
                 lyt_departed.setVisibility(View.VISIBLE);
                 lyt_arrived.setVisibility(View.VISIBLE);
                 lyt_spent.setVisibility(View.VISIBLE);
-                tv_departed.setText(GeneralUtil.getCurrentTime(legStored.getDepart_time()));
-                tv_arrived.setText(GeneralUtil.getCurrentTime(legStored.getArrive_time()));
-                tv_spent.setText(legStored.getSpent_time() + " mins");
+//                tv_departed.setText();
+//                tv_arrived.setText();
+//                tv_spent.setText(legStored.getSpent_time() + " mins");
                 btn_time.setVisibility(View.GONE);
                 break;
         }
+    }
+
+    @Override
+    public void getAddressesResult(List<DeliveryAddress> addresses, String message) {
+
+    }
+
+    @Override
+    public void getAddressResult(DeliveryAddress address, String message) {
+        if (address == null){
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        }else{
+            deliveryAddress = address;
+            viewOfAll(View.VISIBLE);
+            viewByStatus();
+        }
+    }
+
+    @Override
+    public void departureResult(DeliveryAddress address, String message) {
+
+    }
+
+    @Override
+    public void arrivedResult(DeliveryAddress address, String message) {
+
+    }
+
+    /**
+     * Whether show the page content
+     * @param visible
+     */
+    private void viewOfAll(int visible){
+        btn_time.setVisibility(visible);
+        sv_all.setVisibility(visible);
     }
 }

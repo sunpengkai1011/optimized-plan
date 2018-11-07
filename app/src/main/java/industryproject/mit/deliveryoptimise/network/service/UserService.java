@@ -9,6 +9,9 @@ import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
+/**
+ * The request service is related with user information
+ */
 public interface UserService {
     @POST("user/{username}")
     Single<LoginResponse> signin(@Path("username") String username, @Header("Authorization") String authorization);

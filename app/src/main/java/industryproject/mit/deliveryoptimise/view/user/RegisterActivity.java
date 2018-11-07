@@ -46,7 +46,9 @@ public class RegisterActivity extends BaseActivity implements ILoginView {
 
     @Override
     protected void initData() {
+        //Set the title text.
         tv_title.setText(R.string.title_register);
+        //Display the back button.
         lyt_back.setVisibility(View.VISIBLE);
         registerPresenter = new LoginPresenterImpl(this, this);
     }

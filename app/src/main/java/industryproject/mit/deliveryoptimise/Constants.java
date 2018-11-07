@@ -35,7 +35,7 @@ public class Constants {
     public static final String KEY_INTENT_USERINFO = "userinfo";
     public static final String KEY_INTENT_USERNAME = "username";
     public static final String KEY_INTENT_ADDRESSES = "addresses";
-    public static final String KEY_INTENT_ROUTESTORED = "route_stored";
+    public static final String KEY_INTENT_LEG = "leg";
     public static final String KEY_INTENT_POSITION = "position";
     public static final String KEY_INTENT_CLOSETYPE = "close_type";
     public static final int INTNET_REUQEST_MAP_TO_DEATIL = 200;

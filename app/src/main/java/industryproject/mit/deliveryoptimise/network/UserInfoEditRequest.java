@@ -9,6 +9,9 @@ import industryproject.mit.deliveryoptimise.entities.network.LoginResponse;
 import industryproject.mit.deliveryoptimise.network.service.UserService;
 import io.reactivex.Single;
 
+/**
+ * The request of editing the user information.
+ */
 public class UserInfoEditRequest extends BaseRequest<UserService, LoginResponse, LoginResponse> {
     private UserInfo userInfo;
 

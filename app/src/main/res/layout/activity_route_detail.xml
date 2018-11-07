@@ -14,10 +14,12 @@
         android:layout_marginBottom="15dp" />
 
     <ScrollView
+        android:id="@+id/sv_all"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/btn_time"
         android:layout_below="@id/view_title_bar">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
