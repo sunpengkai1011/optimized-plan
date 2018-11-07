@@ -9,6 +9,7 @@
     <string name="btnMessage_arrive">Arrive</string>
     <string name="btnMessage_cancel">Cancel</string>
     <string name="btnMessage_sure">Sure</string>
+    <string name="btnMessage_logout">Logout</string>
 
     <string name="btnMessage_depart_clicked">You already clicked the "Depart" button, do you want to click again?</string>
     <string name="btnMessage_arrive_clicked">You already clicked the "Arrive" button, do you want to click again?</string>
@@ -38,12 +39,17 @@
     <string name="title_register">REGISTER</string>
     <string name="toast_confirm_pwd">Please confirm the password.</string>
     <string name="toast_pwd_different">The passwords are different, please enter the password again.</string>
-    <string name="toast_phone_number">The phone number is empty. Please enter the phone number.</string>
     <string name="toast_email">The email is empty. Please enter the email.</string>
-    <string name="toast_city">The city is empty. Please enter the city.</string>
-    <string name="toast_suburb">The suburb is empty. Please enter the suburb.</string>
-    <string name="toast_street">The street is empty. Please enter the street.</string>
+    <string name="toast_phone">The phone number is empty. Please enter the phone number.</string>
     <string name="toast_feedback">The feedback is empty. Please enter the feedback.</string>
+
+    <!-- User Info -->
+    <string name="user_info_title_phone">Phone: </string>
+    <string name="user_info_title_email">Email: </string>
+    <string name="user_role_staff">Staff</string>
+    <string name="btn_edit">Edit</string>
+    <string name="title_edit">EDIT</string>
+    <string name="title_info">INFORMATION</string>
 
     <!--    Permissions    -->
     <string name="permission_rationale_location">Access to the location service is required to demonstrate the \'my location\' feature, which shows your current location on the map.</string>

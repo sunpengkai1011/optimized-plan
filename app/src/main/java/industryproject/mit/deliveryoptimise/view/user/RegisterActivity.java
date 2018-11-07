@@ -1,4 +1,4 @@
-package industryproject.mit.deliveryoptimise.view.login;
+package industryproject.mit.deliveryoptimise.view.user;
 
 import android.content.Intent;
 import android.text.TextUtils;
@@ -12,15 +12,18 @@ import android.widget.Toast;
 import industryproject.mit.deliveryoptimise.BaseActivity;
 import industryproject.mit.deliveryoptimise.Constants;
 import industryproject.mit.deliveryoptimise.R;
-import industryproject.mit.deliveryoptimise.entities.parcel.UAddress;
 import industryproject.mit.deliveryoptimise.entities.UserInfo;
-import industryproject.mit.deliveryoptimise.presenter.login.LoginPresenterImpl;
+import industryproject.mit.deliveryoptimise.presenter.user.LoginPresenterImpl;
 
 
+/**
+ * Registration page
+ */
 public class RegisterActivity extends BaseActivity implements ILoginView {
     private TextView tv_title;
-    private EditText et_username, et_password, et_confirm_pwd, et_city, et_suburb, et_street;
+    private EditText et_username, et_password, et_confirm_pwd, et_phone, et_email;
     private Button btn_register;
+    private String username;
     private RelativeLayout lyt_back;
 
     private LoginPresenterImpl registerPresenter;
@@ -33,9 +36,8 @@ public class RegisterActivity extends BaseActivity implements ILoginView {
         et_username = findViewById(R.id.et_username);
         et_password = findViewById(R.id.et_password);
         et_confirm_pwd = findViewById(R.id.et_confirm_pwd);
-        et_city = findViewById(R.id.et_city);
-        et_suburb = findViewById(R.id.et_suburb);
-        et_street = findViewById(R.id.et_street);
+        et_phone = findViewById(R.id.et_phone);
+        et_email = findViewById(R.id.et_email);
 
         btn_register = findViewById(R.id.btn_register);
 
@@ -67,56 +69,68 @@ public class RegisterActivity extends BaseActivity implements ILoginView {
         }
     }
 
+
     @Override
-    public void loginResult(UserInfo userInfo, int code) {
+    public void loginResult(UserInfo userInfo, String message) {
+
     }
 
     @Override
-    public void registerResult(UserInfo userInfo, int code) {
-        switch (code){
-            case Constants.RESPONSE_CODE_FAIL:
-                Toast.makeText(this, "Register Failed!", Toast.LENGTH_SHORT).show();
-                break;
-            case Constants.RESPONSE_CODE_SUCCESSFUL:
-                Toast.makeText(this, "Register Successful!", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                intent.putExtra(Constants.KEY_INTENT_USERINFO, userInfo);
-                RegisterActivity.this.setResult(RESULT_OK, intent);
-                this.finish();
-                break;
+    public void registerResult(boolean isSuccess, String message) {
+        if (isSuccess){
+            //If the registration request is successful, jump to the Login page and send the username to Login page.
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+            intent.putExtra(Constants.KEY_INTENT_USERNAME, username);
+            RegisterActivity.this.setResult(RESULT_OK, intent);
+            this.finish();
+        }else{
+            //If the registration request is failed, give the prompt.
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         }
     }
 
+    @Override
+    public void editUserInfoResult(UserInfo userInfo, String message) {
+
+    }
+
+    /**
+     * Register new user account
+     */
     private void registerUser(){
+        //Get the users input information.
         String username = et_username.getText().toString().trim();
         String password = et_password.getText().toString().trim();
         String confirm_pwd = et_confirm_pwd.getText().toString().trim();
-        String city = et_city.getText().toString().trim();
-        String suburb = et_suburb.getText().toString().trim();
-        String street = et_street.getText().toString().trim();
+        String phone = et_phone.getText().toString().trim();
+        String email = et_email.getText().toString().trim();
 
+        //Determine whether the user input information is empty.
         if (!TextUtils.isEmpty(username) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(confirm_pwd)
-                && !TextUtils.isEmpty(city) && !TextUtils.isEmpty(suburb) && !TextUtils.isEmpty(street)){
+                && !TextUtils.isEmpty(phone) && !TextUtils.isEmpty(email)){
+            //Determine the twice input passwords whether is same.
             if (!password.equals(confirm_pwd)){
+                //Give the prompt
                 Toast.makeText(this, getResources().getString(R.string.toast_pwd_different), Toast.LENGTH_SHORT).show();
             }else{
-                UAddress address = new UAddress(city, suburb, street);
-                UserInfo userInfo = new UserInfo(username, password, address);
+                //Start to register the new user account
+                UserInfo userInfo = new UserInfo(username, password, phone, email);
+                this.username = username;
                 registerPresenter.doRegister(userInfo);
             }
         }else {
+            //If an item is empty give a corresponding prompt
             if (TextUtils.isEmpty(username)){
                 Toast.makeText(this, getResources().getString(R.string.toast_empty_username), Toast.LENGTH_SHORT).show();
             }else if (TextUtils.isEmpty(password)){
                 Toast.makeText(this, getResources().getString(R.string.toast_empty_password), Toast.LENGTH_SHORT).show();
             }else if (TextUtils.isEmpty(confirm_pwd)){
                 Toast.makeText(this, getResources().getString(R.string.toast_confirm_pwd), Toast.LENGTH_SHORT).show();
-            }else if (TextUtils.isEmpty(city)){
-                Toast.makeText(this, getResources().getString(R.string.toast_city), Toast.LENGTH_SHORT).show();
-            }else if (TextUtils.isEmpty(suburb)){
-                Toast.makeText(this, getResources().getString(R.string.toast_suburb), Toast.LENGTH_SHORT).show();
-            }else if (TextUtils.isEmpty(street)){
-                Toast.makeText(this, getResources().getString(R.string.toast_street), Toast.LENGTH_SHORT).show();
+            }else if (TextUtils.isEmpty(phone)){
+                Toast.makeText(this, getResources().getString(R.string.toast_phone), Toast.LENGTH_SHORT).show();
+            }else if (TextUtils.isEmpty(email)){
+                Toast.makeText(this, getResources().getString(R.string.toast_email), Toast.LENGTH_SHORT).show();
             }
         }
     }

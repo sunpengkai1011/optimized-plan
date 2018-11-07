@@ -14,5 +14,13 @@
     <color name="transparent_grey">#0f000000</color>
     <color name="register_blue">#0968EC</color>
 
+    <color name="light_gold">#fde199</color>
+    <color name="status_other">#f41533</color>
+    <color name="status_payment">#78f108</color>
+    <color name="user_blue">#500968EC</color>
+    <color name="background_logout">#9e0618</color>
+    <color name="gold">#e9a61d</color>
+    <color name="light_blue">#afe3fc</color>
+
     <color name="route">#8000ec00</color>
 </resources>

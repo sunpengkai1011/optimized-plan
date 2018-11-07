@@ -1,19 +1,12 @@
 package industryproject.mit.deliveryoptimise.model.map;
 
 import android.content.Context;
-import android.text.TextUtils;
-import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import industryproject.mit.deliveryoptimise.Constants;
-import industryproject.mit.deliveryoptimise.entities.map.LegStored;
 import industryproject.mit.deliveryoptimise.entities.map.RouteStored;
 import industryproject.mit.deliveryoptimise.entities.network.RouteRequestInfo;
 import industryproject.mit.deliveryoptimise.entities.network.RouteResponse;
 import industryproject.mit.deliveryoptimise.entities.parcel.DeliveryLocations;
-import industryproject.mit.deliveryoptimise.entities.parcel.UAddress;
 import industryproject.mit.deliveryoptimise.network.RequestCallBack;
 import industryproject.mit.deliveryoptimise.network.RouteRequest;
 import industryproject.mit.deliveryoptimise.utils.GeneralUtil;

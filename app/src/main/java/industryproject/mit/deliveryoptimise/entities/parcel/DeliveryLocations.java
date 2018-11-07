@@ -4,41 +4,36 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Delivery locations entity.
- */
 public class DeliveryLocations implements Serializable{
-    private Origin origin;
-    private Destination destination;
-    private List<WayPoint> wayPoints;
+    private DeliveryAddress origin;
+    private DeliveryAddress destination;
+    private List<DeliveryAddress> wayPoints;
 
-    public DeliveryLocations(Origin origin, Destination destination, List<WayPoint> wayPoints) {
-        this.origin = origin;
-        this.destination = destination;
-        this.wayPoints = wayPoints;
+    public DeliveryLocations() {
+        wayPoints = new ArrayList<>();
     }
 
-    public Origin getOrigin() {
+    public DeliveryAddress getOrigin() {
         return origin;
     }
 
-    public void setOrigin(Origin origin) {
+    public void setOrigin(DeliveryAddress origin) {
         this.origin = origin;
     }
 
-    public Destination getDestination() {
+    public DeliveryAddress getDestination() {
         return destination;
     }
 
-    public void setDestination(Destination destination) {
+    public void setDestination(DeliveryAddress destination) {
         this.destination = destination;
     }
 
-    public List<WayPoint> getWayPoints() {
+    public List<DeliveryAddress> getWayPoints() {
         return wayPoints;
     }
 
-    public void setWayPoints(List<WayPoint> wayPoints) {
+    public void setWayPoints(List<DeliveryAddress> wayPoints) {
         this.wayPoints = wayPoints;
     }
 }

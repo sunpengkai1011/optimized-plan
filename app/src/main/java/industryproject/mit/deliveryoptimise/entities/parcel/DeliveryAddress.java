@@ -8,18 +8,33 @@ import java.io.Serializable;
 /**
  * The address entity
  */
-public class UAddress implements Serializable{
+public class DeliveryAddress implements Serializable{
+    private int id;
     private String city;
     private String suburb;
     private String street;
+    private int type_id;
+    private String type_name;
+    private int status;
 
-    public UAddress() {
+    public int getId() {
+        return id;
     }
 
-    public UAddress(String city, String suburb, String street) {
-        this.city = city;
-        this.suburb = suburb;
-        this.street = street;
+    public int getType_id() {
+        return type_id;
+    }
+
+    public void setType_id(int type_id) {
+        this.type_id = type_id;
+    }
+
+    public String getType_name() {
+        return type_name;
+    }
+
+    public void setType_name(String type_name) {
+        this.type_name = type_name;
     }
 
     public String getCity() {
@@ -53,6 +68,14 @@ public class UAddress implements Serializable{
             street = "";
         }
         this.street = street;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     @Override

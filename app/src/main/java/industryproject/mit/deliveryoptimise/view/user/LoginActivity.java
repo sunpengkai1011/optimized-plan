@@ -1,4 +1,4 @@
-package industryproject.mit.deliveryoptimise.view.login;
+package industryproject.mit.deliveryoptimise.view.user;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -17,9 +17,12 @@ import industryproject.mit.deliveryoptimise.BaseActivity;
 import industryproject.mit.deliveryoptimise.Constants;
 import industryproject.mit.deliveryoptimise.R;
 import industryproject.mit.deliveryoptimise.entities.UserInfo;
-import industryproject.mit.deliveryoptimise.presenter.login.LoginPresenterImpl;
-import industryproject.mit.deliveryoptimise.view.location.DeliveryLocationActivity;
+import industryproject.mit.deliveryoptimise.presenter.user.LoginPresenterImpl;
+import industryproject.mit.deliveryoptimise.view.location.DeliveryAddressesActivity;
 
+/**
+ * Login page
+ */
 public class LoginActivity extends BaseActivity implements ILoginView{
     private TextView tv_title, tv_to_register;
     private EditText et_username, et_password;
@@ -28,8 +31,7 @@ public class LoginActivity extends BaseActivity implements ILoginView{
     private LoginPresenterImpl loginPresenterImpl;
 
     private boolean isQuit = false;
-
-    private UserInfo userInfo;
+    private String username;
 
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
@@ -67,12 +69,16 @@ public class LoginActivity extends BaseActivity implements ILoginView{
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.btn_login:
+                //Get the input username and password
                 String username = et_username.getText().toString().trim();
                 String password = et_password.getText().toString().trim();
+                //Determine the username and password whether are empty.
                 if (!TextUtils.isEmpty(username) &&
                         !TextUtils.isEmpty(password)){
+                    //If they are not empty, start to login.
                     loginPresenterImpl.doLogin(username, password);
                 }else{
+                    //If any item is empty, give the corresponding prompt.
                     if (TextUtils.isEmpty(username)){
                         Toast.makeText(this, getResources().getString(R.string.toast_empty_username), Toast.LENGTH_SHORT).show();
                     }else {
@@ -81,6 +87,7 @@ public class LoginActivity extends BaseActivity implements ILoginView{
                 }
                 break;
             case R.id.tv_to_register:
+                //Clicked the register button to jump to the Registration Page.
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivityForResult(intent, Constants.INTENT_REQUEST_LOGIN_TO_REGISTER);
                 break;
@@ -91,31 +98,35 @@ public class LoginActivity extends BaseActivity implements ILoginView{
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (RESULT_OK == resultCode) {
-            userInfo = (UserInfo) data.getSerializableExtra(Constants.KEY_INTENT_USERINFO);
-            if (!TextUtils.isEmpty(userInfo.getUserName())) {
-                et_username.setText(userInfo.getUserName());
+            //Get the username from the Registration page, and show it.
+            username = data.getStringExtra(Constants.KEY_INTENT_USERNAME);
+            if (!TextUtils.isEmpty(username)) {
+                et_username.setText(username);
             }
         }
     }
 
     @Override
-    public void loginResult(UserInfo userInfo, int code) {
-        switch (code){
-            case Constants.RESPONSE_CODE_FAIL:
-                Toast.makeText(this, "Login Failed!", Toast.LENGTH_SHORT).show();
-                break;
-            case Constants.RESPONSE_CODE_SUCCESSFUL:
-                Toast.makeText(this, "Login Successful!", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(LoginActivity.this, DeliveryLocationActivity.class);
-                intent.putExtra(Constants.KEY_INTENT_USERINFO, userInfo);
-                startActivity(intent);
-                this.finish();
-                break;
+    public void loginResult(UserInfo userInfo, String message) {
+        if (userInfo == null){
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+            //If the login request is successful, jump to the next page.
+            Constants.userInfo = userInfo;
+            Intent intent = new Intent(LoginActivity.this, DeliveryAddressesActivity.class);
+            startActivity(intent);
+            this.finish();
         }
     }
 
     @Override
-    public void registerResult(UserInfo userInfo, int code) {
+    public void registerResult(boolean isSuccess, String message) {
+
+    }
+
+    @Override
+    public void editUserInfoResult(UserInfo userInfo, String message) {
 
     }
 

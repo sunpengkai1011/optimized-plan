@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 
 import com.android.tu.loadingdialog.LoadingDialog;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.lang.reflect.Type;
 import java.text.DecimalFormat;
@@ -148,5 +149,9 @@ public class GeneralUtil {
      */
     public static int calculateTime(long start_time, long end_time){
         return msToMinutes((int)(end_time - start_time));
+    }
+
+    public static Gson getGson() {
+        return new GsonBuilder().serializeNulls().create();
     }
 }

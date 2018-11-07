@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import java.lang.ref.WeakReference;
 
-import industryproject.mit.deliveryoptimise.view.login.LoginActivity;
+import industryproject.mit.deliveryoptimise.view.user.LoginActivity;
 
 /**
  *  The starting page

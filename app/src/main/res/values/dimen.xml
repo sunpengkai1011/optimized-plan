@@ -10,4 +10,9 @@
     <!-- Login -->
     <dimen name="login_et_height">50dp</dimen>
     <dimen name="et_margin_horizontal">20dp</dimen>
+
+    <!-- UserInfo -->
+    <dimen name="size_user_icon">60dp</dimen>
+    <dimen name="user_margin_left">20dp</dimen>
+    <dimen name="user_margin_top">20dp</dimen>
 </resources>

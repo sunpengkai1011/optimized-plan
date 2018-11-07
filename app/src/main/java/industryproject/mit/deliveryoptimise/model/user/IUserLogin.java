@@ -8,22 +8,20 @@ import industryproject.mit.deliveryoptimise.entities.UserInfo;
 public interface IUserLogin {
 
     /**
-     * Get the user information through username
-     * @param username
-     * @return user information
-     */
-    UserInfo getUserInfo(String username);
-
-    /**
      * @param username
      * @param password
      * @return
      */
-    boolean login(String username, String password);
+    void login(String username, String password);
 
     /**
      * @param userInfo
      * @return
      */
-    boolean register(UserInfo userInfo);
+    void register(UserInfo userInfo);
+
+    /**
+     * @param userInfo
+     */
+    void editUserInfo(UserInfo userInfo);
 }

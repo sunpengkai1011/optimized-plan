@@ -2,40 +2,36 @@ package industryproject.mit.deliveryoptimise.entities;
 
 import java.io.Serializable;
 
-import industryproject.mit.deliveryoptimise.entities.parcel.UAddress;
-
 /**
  * The user information entity.
  */
 public class UserInfo implements Serializable{
-    private String userId;
-    private String userName;
+    private String id;
+    private String user_name;
     private String password;
-    private UAddress uAddress;
+    private String phone;
+    private String email;
 
     public UserInfo() {
     }
 
-    public UserInfo(String userName, String password, UAddress uAddress) {
-        this.userName = userName;
+    public UserInfo(String userName, String password, String phone, String email) {
+        this.user_name = userName;
         this.password = password;
-        this.uAddress = uAddress;
+        this.phone = phone;
+        this.email = email;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getId() {
+        return id;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public String getUser_name() {
+        return user_name;
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
     }
 
     public String getPassword() {
@@ -46,11 +42,19 @@ public class UserInfo implements Serializable{
         this.password = password;
     }
 
-    public UAddress getuAddress() {
-        return uAddress;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setuAddress(UAddress uAddress) {
-        this.uAddress = uAddress;
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

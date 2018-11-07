@@ -1,4 +1,4 @@
-package industryproject.mit.deliveryoptimise.network;
+package industryproject.mit.deliveryoptimise.network.service;
 
 import industryproject.mit.deliveryoptimise.entities.network.RouteResponse;
 import retrofit2.Call;

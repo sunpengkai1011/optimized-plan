@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/view_title_bar"
+        layout="@layout/view_title_bar" />
+
+    <Button
+        android:id="@+id/btn_commit"
+        style="@style/general_button"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/background_logout"
+        android:text="@string/btnMessage_logout" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/btn_commit"
+        android:layout_below="@id/view_title_bar"
+        android:paddingBottom="10dp">
+
+        <RelativeLayout
+            android:id="@+id/lyt_user_info"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/btn_commit"
+            android:visibility="visible">
+
+            <RelativeLayout
+                android:id="@+id/lyt_header"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:background="@drawable/background_user"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp">
+
+                <ImageView
+                    android:id="@+id/iv_user_icon"
+                    style="@style/user_icon"
+                    android:layout_centerVertical="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/icon_user" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_toRightOf="@id/iv_user_icon"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_username"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="2"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/textSize_big"
+                        android:textStyle="bold|italic" />
+
+                    <TextView
+                        android:id="@+id/tv_user_role"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/grey"
+                        android:text="@string/user_role_staff"
+                        android:textSize="@dimen/textSize_standard" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/lyt_user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lyt_header"
+                android:layout_marginTop="20dp"
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:id="@+id/tv_title_phone_number"
+                    style="@style/user_info_title"
+                    android:text="@string/user_info_title_phone" />
+
+                <TextView
+                    android:id="@+id/tv_title_email"
+                    style="@style/user_info_title"
+                    android:layout_below="@id/tv_phone_number"
+                    android:text="@string/user_info_title_email" />
+
+                <TextView
+                    android:id="@+id/tv_phone_number"
+                    style="@style/user_info_text"
+                    android:layout_toRightOf="@id/tv_title_phone_number" />
+
+                <TextView
+                    android:id="@+id/tv_email"
+                    style="@style/user_info_text"
+                    android:layout_below="@id/tv_phone_number"
+                    android:layout_toRightOf="@id/tv_title_email" />
+
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/lyt_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lyt_header"
+                android:layout_marginTop="20dp">
+
+                <EditText
+                    android:id="@+id/et_phone_number"
+                    style="@style/user_info_edit"
+                    android:hint="@string/hint_phone_number" />
+
+                <EditText
+                    android:id="@+id/et_email"
+                    style="@style/user_info_edit"
+                    android:layout_below="@id/et_phone_number"
+                    android:hint="@string/hint_email" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

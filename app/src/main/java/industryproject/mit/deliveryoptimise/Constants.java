@@ -21,14 +21,23 @@ public class Constants {
     public static final String SP_KEY_ROUTES = "ROUTES";
 
     //Response code
-    public static final int RESPONSE_CODE_SUCCESSFUL = 100;
-    public static final int RESPONSE_CODE_FAIL = 101;
+    public static final int RESPONSE_CODE_SUCCESSFUL = 200;
+
+    //Close Type
+    public static final int CLOSETYPE_LOGOUT = 1;
+
+    //Address Type
+    public static final int ADDRESS_TYPE_ORIGIN = 1;
+    public static final int ADDRESS_TYPE_DESTINATION = 2;
+    public static final int ADDRESS_TYPE_WAYPOINT = 3;
 
     //Intent
     public static final String KEY_INTENT_USERINFO = "userinfo";
+    public static final String KEY_INTENT_USERNAME = "username";
     public static final String KEY_INTENT_ADDRESSES = "addresses";
     public static final String KEY_INTENT_ROUTESTORED = "route_stored";
     public static final String KEY_INTENT_POSITION = "position";
+    public static final String KEY_INTENT_CLOSETYPE = "close_type";
     public static final int INTNET_REUQEST_MAP_TO_DEATIL = 200;
     public static final int INTENT_REQUEST_LOGIN_TO_REGISTER = 202;
 

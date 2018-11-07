@@ -13,6 +13,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -50,7 +51,8 @@ public class MapActivity extends BaseActivity implements
     private boolean mPermissionDenied = false;
 
     private TextView tv_title, tv_num_markers, tv_distance, tv_duration;
-    private RelativeLayout lyt_back, lyt_navigate, lyt_route_info;
+    private RelativeLayout lyt_back, lyt_right, lyt_route_info;
+    private ImageView iv_icon;
     private RecyclerViewPager rvp_routes;
     private DeliveryLocations locations;
     private RouteResponse response;
@@ -73,7 +75,8 @@ public class MapActivity extends BaseActivity implements
         setContentView(R.layout.activity_map);
         tv_title = findViewById(R.id.tv_title);
         lyt_back = findViewById(R.id.lyt_back);
-        lyt_navigate = findViewById(R.id.lyt_navigate);
+        lyt_right = findViewById(R.id.lyt_right);
+        iv_icon = findViewById(R.id.iv_icon);
         lyt_route_info = findViewById(R.id.lyt_route_info);
         tv_num_markers = findViewById(R.id.tv_num_markers);
         tv_distance = findViewById(R.id.tv_distance);
@@ -82,7 +85,8 @@ public class MapActivity extends BaseActivity implements
 
     @Override
     protected void initData(){
-        lyt_navigate.setVisibility(View.VISIBLE);
+        lyt_right.setVisibility(View.VISIBLE);
+        iv_icon.setImageResource(R.drawable.logo_navigation);
         tv_title.setText(R.string.title_act_map);
         lyt_back.setVisibility(View.VISIBLE);
         animation_in = AnimationUtils.loadAnimation(this, R.anim.anim_view_in);
@@ -108,7 +112,7 @@ public class MapActivity extends BaseActivity implements
     @Override
     protected void initListener(){
         lyt_back.setOnClickListener(this);
-        lyt_navigate.setOnClickListener(this);
+        lyt_right.setOnClickListener(this);
         animation_out.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -192,7 +196,7 @@ public class MapActivity extends BaseActivity implements
             case R.id.lyt_back:
                 MapActivity.this.finish();
                 break;
-            case R.id.lyt_navigate:
+            case R.id.lyt_right:
                 MapUtil.intentToGoogleMap(MapActivity.this, response.getRoutes().get(0));
                 break;
         }
