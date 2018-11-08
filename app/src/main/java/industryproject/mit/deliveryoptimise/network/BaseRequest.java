@@ -21,7 +21,7 @@ import io.reactivex.subjects.PublishSubject;
 import timber.log.Timber;
 
 /**
- * Created by wendychen on 8/12/17.
+ * The base request
  */
 
 public abstract class BaseRequest<T, R, M> {

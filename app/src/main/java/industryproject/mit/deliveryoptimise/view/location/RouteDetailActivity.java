@@ -1,5 +1,6 @@
 package industryproject.mit.deliveryoptimise.view.location;
 
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -15,6 +16,7 @@ import industryproject.mit.deliveryoptimise.R;
 import industryproject.mit.deliveryoptimise.entities.map.LegInfo;
 import industryproject.mit.deliveryoptimise.entities.parcel.DeliveryAddress;
 import industryproject.mit.deliveryoptimise.presenter.address.DeliveryAddressPresenterImpl;
+import industryproject.mit.deliveryoptimise.utils.GeneralUtil;
 
 public class RouteDetailActivity extends BaseActivity implements IDeliveryAddressesView {
     private TextView tv_title, tv_origin, tv_destination, tv_distance, tv_duration,
@@ -22,6 +24,7 @@ public class RouteDetailActivity extends BaseActivity implements IDeliveryAddres
     private RelativeLayout lyt_back, lyt_departed, lyt_arrived, lyt_spent;
     private Button btn_time;
     private ScrollView sv_all;
+    private SwipeRefreshLayout slyt_all;
     private DeliveryAddressPresenterImpl presenter;
     private LegInfo legInfo;
     private DeliveryAddress deliveryAddress;
@@ -43,6 +46,7 @@ public class RouteDetailActivity extends BaseActivity implements IDeliveryAddres
         lyt_spent = findViewById(R.id.lyt_spent);
         btn_time = findViewById(R.id.btn_time);
         sv_all = findViewById(R.id.sv_all);
+        slyt_all = findViewById(R.id.slyt_all);
 
     }
 
@@ -58,13 +62,13 @@ public class RouteDetailActivity extends BaseActivity implements IDeliveryAddres
         tv_duration.setText(legInfo.getDuration().getText());
         presenter = new DeliveryAddressPresenterImpl(this, this);
         presenter.getDeliveryAddress(legInfo.getId());
-        viewByStatus();
     }
 
     @Override
     protected void initListener() {
         lyt_back.setOnClickListener(this);
         btn_time.setOnClickListener(this);
+        slyt_all.setOnRefreshListener(() -> presenter.getDeliveryAddress(legInfo.getId()));
     }
 
     @Override
@@ -87,30 +91,31 @@ public class RouteDetailActivity extends BaseActivity implements IDeliveryAddres
     }
 
     private void viewByStatus() {
-        if (deliveryAddress != null)
-        switch (deliveryAddress.getStatus()){
-            case Constants.STATUS_INIT:
-                lyt_departed.setVisibility(View.GONE);
-                lyt_arrived.setVisibility(View.GONE);
-                lyt_spent.setVisibility(View.GONE);
-                btn_time.setText("Departed");
-                break;
-            case Constants.STATUS_DEPARTED:
-                lyt_departed.setVisibility(View.VISIBLE);
-                lyt_arrived.setVisibility(View.GONE);
-                lyt_spent.setVisibility(View.GONE);
-//                tv_departed.setText();
-                btn_time.setText("Arrived");
-                break;
-            case Constants.STATUS_ARRIVED:
-                lyt_departed.setVisibility(View.VISIBLE);
-                lyt_arrived.setVisibility(View.VISIBLE);
-                lyt_spent.setVisibility(View.VISIBLE);
-//                tv_departed.setText();
-//                tv_arrived.setText();
-//                tv_spent.setText(legStored.getSpent_time() + " mins");
-                btn_time.setVisibility(View.GONE);
-                break;
+        if (deliveryAddress != null) {
+            switch (deliveryAddress.getStatus()) {
+                case Constants.STATUS_INIT:
+                    lyt_departed.setVisibility(View.GONE);
+                    lyt_arrived.setVisibility(View.GONE);
+                    lyt_spent.setVisibility(View.GONE);
+                    btn_time.setText("Departed");
+                    break;
+                case Constants.STATUS_DEPARTED:
+                    lyt_departed.setVisibility(View.VISIBLE);
+                    lyt_arrived.setVisibility(View.GONE);
+                    lyt_spent.setVisibility(View.GONE);
+                    tv_departed.setText(GeneralUtil.getCurrentTime(deliveryAddress.getDeparture_time()));
+                    btn_time.setText("Arrived");
+                    break;
+                case Constants.STATUS_ARRIVED:
+                    lyt_departed.setVisibility(View.VISIBLE);
+                    lyt_arrived.setVisibility(View.VISIBLE);
+                    lyt_spent.setVisibility(View.VISIBLE);
+                    tv_departed.setText(GeneralUtil.getCurrentTime(deliveryAddress.getDeparture_time()));
+                    tv_arrived.setText(GeneralUtil.getCurrentTime(deliveryAddress.getArrived_time()));
+                    tv_spent.setText(GeneralUtil.calculateTime(deliveryAddress.getDeparture_time(), deliveryAddress.getArrived_time()));
+                    btn_time.setVisibility(View.GONE);
+                    break;
+            }
         }
     }
 
@@ -121,6 +126,9 @@ public class RouteDetailActivity extends BaseActivity implements IDeliveryAddres
 
     @Override
     public void getAddressResult(DeliveryAddress address, String message) {
+        if (slyt_all.isRefreshing()){
+            slyt_all.setRefreshing(false);
+        }
         if (address == null){
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         }else{
@@ -132,12 +140,22 @@ public class RouteDetailActivity extends BaseActivity implements IDeliveryAddres
 
     @Override
     public void departureResult(DeliveryAddress address, String message) {
-
+        if (address == null){
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        }else {
+            deliveryAddress = address;
+            viewByStatus();
+        }
     }
 
     @Override
     public void arrivedResult(DeliveryAddress address, String message) {
-
+        if (address == null){
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        }else {
+            deliveryAddress = address;
+            viewByStatus();
+        }
     }
 
     /**

@@ -27,6 +27,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
 
+import java.util.List;
+
 import industryproject.mit.deliveryoptimise.BaseActivity;
 import industryproject.mit.deliveryoptimise.Constants;
 import industryproject.mit.deliveryoptimise.R;
@@ -265,6 +267,11 @@ public class MapActivity extends BaseActivity implements
     @Override
     public void routeResponse(RouteResponse response) {
         this.response = response;
+        List<Integer> order = response.getRoutes().get(0).getWaypoint_order();
+        for(int i = 0; i < order.size(); i++){
+            response.getRoutes().get(0).getLegs().get(i).setId(locations.getWayPoints().get(order.get(i)).getId());
+        }
+        response.getRoutes().get(0).getLegs().get(response.getRoutes().get(0).getLegs().size() -1).setId(locations.getDestination().getId());
         if(isLoaded) {
             MapUtil.displayArea(mMap, this, response.getRoutes().get(0).getBounds(), 40);
         }

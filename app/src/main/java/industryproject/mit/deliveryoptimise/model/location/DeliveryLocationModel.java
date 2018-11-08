@@ -2,8 +2,11 @@ package industryproject.mit.deliveryoptimise.model.location;
 
 import android.content.Context;
 
+import industryproject.mit.deliveryoptimise.entities.network.AddressTime;
+import industryproject.mit.deliveryoptimise.network.ArrivedRequest;
 import industryproject.mit.deliveryoptimise.network.DeliveryAddressRequest;
 import industryproject.mit.deliveryoptimise.network.DeliveryAddressesRequest;
+import industryproject.mit.deliveryoptimise.network.DepartureRequest;
 import industryproject.mit.deliveryoptimise.presenter.address.DeliveryAddressPresenterImpl;
 import industryproject.mit.deliveryoptimise.view.location.IDeliveryAddressesView;
 
@@ -27,16 +30,22 @@ public class DeliveryLocationModel implements IDeliveryLocation {
 
     @Override
     public void getDeliveryAddress(int id) {
-        new DeliveryAddressRequest(context, id).getData().subscribe(deliveryAddressesResponse -> presenter.getAddressResult(deliveryAddressesResponse), e -> presenter.getAddressResult(null));
+        new DeliveryAddressRequest(context, id).getData().subscribe(
+                deliveryAddressesResponse -> presenter.getAddressResult(deliveryAddressesResponse),
+                e -> presenter.getAddressResult(null));
     }
 
     @Override
-    public void requsetDeparture(int id) {
-        new DeliveryAddressRequest(context, id).getData().subscribe(deliveryAddressesResponse -> presenter.departureResult(deliveryAddressesResponse), e -> presenter.departureResult(null));
+    public void requestDeparture(AddressTime addressTime) {
+        new DepartureRequest(context, addressTime).getData().subscribe(
+                deliveryAddressesResponse -> presenter.departureResult(deliveryAddressesResponse),
+                e -> presenter.departureResult(null));
     }
 
     @Override
-    public void requestArrived(int id) {
-        new DeliveryAddressRequest(context, id).getData().subscribe(deliveryAddressesResponse -> presenter.arrivedResult(deliveryAddressesResponse), e -> presenter.arrivedResult(null));
+    public void requestArrived(AddressTime addressTime) {
+        new ArrivedRequest(context, addressTime).getData().subscribe(
+                deliveryAddressesResponse -> presenter.arrivedResult(deliveryAddressesResponse),
+                e -> presenter.arrivedResult(null));
     }
 }

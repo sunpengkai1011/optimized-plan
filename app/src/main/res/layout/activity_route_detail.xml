@@ -13,123 +13,129 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="15dp" />
 
-    <ScrollView
-        android:id="@+id/sv_all"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/slyt_all"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_above="@id/btn_time"
         android:layout_below="@id/view_title_bar">
 
-        <RelativeLayout
+        <ScrollView
+            android:id="@+id/sv_all"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp">
-
-            <TextView
-                android:id="@+id/tv_title_origin"
-                style="@style/location_title"
-                android:text="ORIGIN :" />
-
-            <TextView
-                android:id="@+id/tv_origin"
-                style="@style/location_text"
-                android:layout_below="@id/tv_title_origin"
-                android:text="Manukau Station, Auckland" />
-
-            <TextView
-                android:id="@+id/tv_title_destination"
-                style="@style/location_title"
-                android:layout_below="@id/tv_origin"
-                android:text="DESTINATION :" />
-
-            <TextView
-                android:id="@+id/tv_destination"
-                style="@style/location_text"
-                android:layout_below="@id/tv_title_destination"
-                android:text="Manukau Station, Auckland" />
-
-            <TextView
-                android:id="@+id/tv_title_distance"
-                style="@style/location_title"
-                android:layout_below="@id/tv_destination"
-                android:text="DISTANCE :" />
-
-            <TextView
-                android:id="@+id/tv_distance"
-                style="@style/location_text"
-                android:gravity="right"
-                android:layout_below="@id/tv_title_distance"
-                android:text="15 KM" />
-
-            <TextView
-                android:id="@+id/tv_title_duration"
-                style="@style/location_title"
-                android:layout_below="@id/tv_distance"
-                android:text="DURATION :" />
-
-            <TextView
-                android:id="@+id/tv_duration"
-                style="@style/location_text"
-                android:layout_below="@id/tv_title_duration"
-                android:gravity="right"
-                android:text="20 MINS" />
+            android:layout_height="match_parent">
 
             <RelativeLayout
-                android:id="@+id/lyt_departed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tv_duration">
+                android:layout_marginBottom="15dp">
 
                 <TextView
-                    android:id="@+id/tv_title_departed"
+                    android:id="@+id/tv_title_origin"
                     style="@style/location_title"
-                    android:text="DEPARTED TIME :" />
+                    android:text="ORIGIN :" />
 
                 <TextView
-                    android:id="@+id/tv_departed"
+                    android:id="@+id/tv_origin"
                     style="@style/location_text"
-                    android:layout_below="@id/tv_title_departed"
-                    android:gravity="right"
-                    android:text="09/11/2018 16:00" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/lyt_arrived"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/lyt_departed">
+                    android:layout_below="@id/tv_title_origin"
+                    android:text="Manukau Station, Auckland" />
 
                 <TextView
-                    android:id="@+id/tv_title_arrived"
+                    android:id="@+id/tv_title_destination"
                     style="@style/location_title"
-                    android:text="ARRIVED TIME :" />
+                    android:layout_below="@id/tv_origin"
+                    android:text="DESTINATION :" />
 
                 <TextView
-                    android:id="@+id/tv_arrived"
+                    android:id="@+id/tv_destination"
                     style="@style/location_text"
-                    android:layout_below="@id/tv_title_arrived"
-                    android:gravity="right"
-                    android:text="09/11/2018 16:00" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/lyt_spent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/lyt_arrived">
+                    android:layout_below="@id/tv_title_destination"
+                    android:text="Manukau Station, Auckland" />
 
                 <TextView
-                    android:id="@+id/tv_title_spent"
+                    android:id="@+id/tv_title_distance"
                     style="@style/location_title"
-                    android:text="ACTUAL TIME SPENT:" />
+                    android:layout_below="@id/tv_destination"
+                    android:text="DISTANCE :" />
 
                 <TextView
-                    android:id="@+id/tv_spent"
+                    android:id="@+id/tv_distance"
                     style="@style/location_text"
-                    android:layout_below="@id/tv_title_spent"
+                    android:layout_below="@id/tv_title_distance"
                     android:gravity="right"
-                    android:text="10 MINS" />
+                    android:text="15 KM" />
+
+                <TextView
+                    android:id="@+id/tv_title_duration"
+                    style="@style/location_title"
+                    android:layout_below="@id/tv_distance"
+                    android:text="DURATION :" />
+
+                <TextView
+                    android:id="@+id/tv_duration"
+                    style="@style/location_text"
+                    android:layout_below="@id/tv_title_duration"
+                    android:gravity="right"
+                    android:text="20 MINS" />
+
+                <RelativeLayout
+                    android:id="@+id/lyt_departed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_duration">
+
+                    <TextView
+                        android:id="@+id/tv_title_departed"
+                        style="@style/location_title"
+                        android:text="DEPARTED TIME :" />
+
+                    <TextView
+                        android:id="@+id/tv_departed"
+                        style="@style/location_text"
+                        android:layout_below="@id/tv_title_departed"
+                        android:gravity="right"
+                        android:text="09/11/2018 16:00" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/lyt_arrived"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/lyt_departed">
+
+                    <TextView
+                        android:id="@+id/tv_title_arrived"
+                        style="@style/location_title"
+                        android:text="ARRIVED TIME :" />
+
+                    <TextView
+                        android:id="@+id/tv_arrived"
+                        style="@style/location_text"
+                        android:layout_below="@id/tv_title_arrived"
+                        android:gravity="right"
+                        android:text="09/11/2018 16:00" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/lyt_spent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/lyt_arrived">
+
+                    <TextView
+                        android:id="@+id/tv_title_spent"
+                        style="@style/location_title"
+                        android:text="ACTUAL TIME SPENT:" />
+
+                    <TextView
+                        android:id="@+id/tv_spent"
+                        style="@style/location_text"
+                        android:layout_below="@id/tv_title_spent"
+                        android:gravity="right"
+                        android:text="10 MINS" />
+                </RelativeLayout>
             </RelativeLayout>
-        </RelativeLayout>
-    </ScrollView>
+        </ScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </RelativeLayout>

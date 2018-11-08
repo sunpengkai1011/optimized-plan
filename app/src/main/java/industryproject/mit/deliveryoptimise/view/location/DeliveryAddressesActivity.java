@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.widget.NestedScrollView;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
@@ -23,7 +25,6 @@ import industryproject.mit.deliveryoptimise.entities.parcel.DeliveryAddress;
 import industryproject.mit.deliveryoptimise.entities.parcel.DeliveryLocations;
 import industryproject.mit.deliveryoptimise.view.map.MapActivity;
 import industryproject.mit.deliveryoptimise.adapter.LocationsAdapter;
-import industryproject.mit.deliveryoptimise.entities.UserInfo;
 import industryproject.mit.deliveryoptimise.presenter.address.DeliveryAddressPresenterImpl;
 import industryproject.mit.deliveryoptimise.view.user.LoginActivity;
 import industryproject.mit.deliveryoptimise.view.user.UserEditActivity;
@@ -31,14 +32,14 @@ import industryproject.mit.deliveryoptimise.view.user.UserEditActivity;
 public class DeliveryAddressesActivity extends BaseActivity implements IDeliveryAddressesView {
     private TextView tv_title, tv_origin, tv_destination;
     private RelativeLayout lyt_right;
+    private SwipeRefreshLayout slyt_all;
+    private NestedScrollView nsv_all;
     private ImageView iv_icon;
     private RecyclerView rv_locations;
     private LocationsAdapter adapter;
     private DeliveryLocations deliveryLocations;
     private Button btn_map;
     private DeliveryAddressPresenterImpl deliveryLocationPresenter;
-    private List<DeliveryAddress> addresses;
-    private UserInfo userInfo;
 
     private boolean isQuit = false;
 
@@ -73,10 +74,13 @@ public class DeliveryAddressesActivity extends BaseActivity implements IDelivery
         btn_map = findViewById(R.id.btn_map);
         lyt_right = findViewById(R.id.lyt_right);
         iv_icon = findViewById(R.id.iv_icon);
+        slyt_all = findViewById(R.id.slyt_all);
+        nsv_all = findViewById(R.id.nsv_all);
     }
 
     @Override
     protected void initData() {
+        viewOfAll(View.GONE);
         tv_title.setText(R.string.title_act_locations);
         lyt_right.setVisibility(View.VISIBLE);
         iv_icon.setImageResource(R.drawable.icon_user);
@@ -88,6 +92,7 @@ public class DeliveryAddressesActivity extends BaseActivity implements IDelivery
     protected void initListener() {
         lyt_right.setOnClickListener(this);
         btn_map.setOnClickListener(this);
+        slyt_all.setOnRefreshListener(() -> deliveryLocationPresenter.getDeliveryAddresses());
     }
 
 
@@ -106,6 +111,9 @@ public class DeliveryAddressesActivity extends BaseActivity implements IDelivery
 
     @Override
     public void getAddressesResult(List<DeliveryAddress> addresses, String message) {
+        if (slyt_all.isRefreshing()){
+            slyt_all.setRefreshing(false);
+        }
         if (addresses == null){
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         }else {
@@ -123,6 +131,7 @@ public class DeliveryAddressesActivity extends BaseActivity implements IDelivery
             rv_locations.setNestedScrollingEnabled(false);
             rv_locations.setFocusable(false);
             rv_locations.setAdapter(adapter);
+            viewOfAll(View.VISIBLE);
         }
     }
 
@@ -180,5 +189,14 @@ public class DeliveryAddressesActivity extends BaseActivity implements IDelivery
                     break;
             }
         }
+    }
+
+    /**
+     * Whether show the page content
+     * @param visible
+     */
+    private void viewOfAll(int visible){
+        btn_map.setVisibility(visible);
+        nsv_all.setVisibility(visible);
     }
 }

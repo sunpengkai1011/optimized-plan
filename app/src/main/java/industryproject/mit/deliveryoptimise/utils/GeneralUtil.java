@@ -60,7 +60,7 @@ public class GeneralUtil {
      * @return minutes value.
      */
     public static int msToMinutes(int ms){
-        return ms / 6000;
+        return ms / 60000;
     }
 
     /**
@@ -147,8 +147,13 @@ public class GeneralUtil {
      * @param end_time
      * @return difference
      */
-    public static int calculateTime(long start_time, long end_time){
-        return msToMinutes((int)(end_time - start_time));
+    public static String calculateTime(long start_time, long end_time){
+        int time = msToMinutes((int)(end_time - start_time));
+        if (time > 1){
+            return time + "Mins";
+        }else {
+            return time + "Min";
+        }
     }
 
     /**

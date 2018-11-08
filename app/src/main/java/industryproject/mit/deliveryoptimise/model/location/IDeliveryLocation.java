@@ -1,6 +1,8 @@
 package industryproject.mit.deliveryoptimise.model.location;
 
 
+import industryproject.mit.deliveryoptimise.entities.network.AddressTime;
+
 /**
  * The interface of location. It is for MVP pattern.
  */
@@ -17,13 +19,13 @@ public interface IDeliveryLocation {
 
     /**
      * The departure request
-     * @param id address id
+     * @param addressTime
      */
-    void requsetDeparture(int id);
+    void requestDeparture(AddressTime addressTime);
 
     /**
      * The arrived request
-     * @param id address id
+     * @param addressTime
      */
-    void requestArrived(int id);
+    void requestArrived(AddressTime addressTime);
 }

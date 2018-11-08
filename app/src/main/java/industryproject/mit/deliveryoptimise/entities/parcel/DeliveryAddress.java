@@ -16,6 +16,8 @@ public class DeliveryAddress implements Serializable{
     private int type_id;
     private String type_name;
     private int status;
+    private long departure_time, arrived_time;
+    private int spent_time;
 
     public int getId() {
         return id;
@@ -23,6 +25,30 @@ public class DeliveryAddress implements Serializable{
 
     public int getType_id() {
         return type_id;
+    }
+
+    public long getDeparture_time() {
+        return departure_time;
+    }
+
+    public void setDeparture_time(long departure_time) {
+        this.departure_time = departure_time;
+    }
+
+    public long getArrived_time() {
+        return arrived_time;
+    }
+
+    public void setArrived_time(long arrived_time) {
+        this.arrived_time = arrived_time;
+    }
+
+    public int getSpent_time() {
+        return spent_time;
+    }
+
+    public void setSpent_time(int spent_time) {
+        this.spent_time = spent_time;
     }
 
     public void setType_id(int type_id) {

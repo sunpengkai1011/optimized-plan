@@ -3,6 +3,7 @@ package industryproject.mit.deliveryoptimise.presenter.address;
 import android.content.Context;
 
 import industryproject.mit.deliveryoptimise.Constants;
+import industryproject.mit.deliveryoptimise.entities.network.AddressTime;
 import industryproject.mit.deliveryoptimise.entities.network.DeliveryAddressesResponse;
 import industryproject.mit.deliveryoptimise.model.location.DeliveryLocationModel;
 import industryproject.mit.deliveryoptimise.model.location.IDeliveryLocation;
@@ -52,7 +53,7 @@ public class DeliveryAddressPresenterImpl implements IDeliveryAddressPresenter {
     public void getAddressResult(DeliveryAddressesResponse response) {
         //Determine whether the response is empty, and call the corresponding method.
         if (response == null){
-            iDeliveryAddressesView.getAddressResult(null, "Get delivery addresses failed");
+            iDeliveryAddressesView.getAddressResult(null, "Get delivery address failed");
         }else {
             if (Constants.RESPONSE_CODE_SUCCESSFUL == response.getCode()){
                 iDeliveryAddressesView.getAddressResult(response.getDeliveryAddress().get(0), response.getMessage());
@@ -65,13 +66,15 @@ public class DeliveryAddressPresenterImpl implements IDeliveryAddressPresenter {
     @Override
     public void requsetDeparture(int id) {
         iDeliveryLocation = new DeliveryLocationModel(context, iDeliveryAddressesView);
-        iDeliveryLocation.requsetDeparture(id);
+        AddressTime addressTime = new AddressTime(id, System.currentTimeMillis());
+        iDeliveryLocation.requestDeparture(addressTime);
     }
 
     @Override
     public void requestArrived(int id) {
         iDeliveryLocation = new DeliveryLocationModel(context, iDeliveryAddressesView);
-        iDeliveryLocation.requestArrived(id);
+        AddressTime addressTime = new AddressTime(id, System.currentTimeMillis());
+        iDeliveryLocation.requestArrived(addressTime);
     }
 
     @Override

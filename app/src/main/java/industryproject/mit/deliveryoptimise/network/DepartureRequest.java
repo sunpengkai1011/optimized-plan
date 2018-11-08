@@ -4,6 +4,7 @@ import android.content.Context;
 
 import java.util.Map;
 
+import industryproject.mit.deliveryoptimise.entities.network.AddressTime;
 import industryproject.mit.deliveryoptimise.entities.network.DeliveryAddressesResponse;
 import industryproject.mit.deliveryoptimise.network.service.AddressService;
 import io.reactivex.Single;
@@ -12,11 +13,11 @@ import io.reactivex.Single;
  * The departure request.
  */
 public class DepartureRequest extends BaseRequest<AddressService, DeliveryAddressesResponse, DeliveryAddressesResponse> {
-    private int id;
+    private AddressTime addressTime;
 
-    public DepartureRequest(Context context, int id) {
+    public DepartureRequest(Context context, AddressTime addressTime) {
         super(context);
-        this.id = id;
+        this.addressTime = addressTime;
     }
 
     @Override
@@ -31,7 +32,7 @@ public class DepartureRequest extends BaseRequest<AddressService, DeliveryAddres
 
     @Override
     protected Single<DeliveryAddressesResponse> getEndpoint(AddressService endpoint) {
-        return endpoint.requestDeparture(id);
+        return endpoint.requestDeparture(addressTime);
     }
 
     @Override
