@@ -16,19 +16,6 @@ public class LegInfo implements Serializable {
     private Location start_location;
     private List<StepInfo> steps;
 
-    public LegInfo() {
-    }
-
-    public LegInfo(Distance distance, Duration duration, String end_address, Location end_location, String start_address, Location start_location, List<StepInfo> steps) {
-        this.distance = distance;
-        this.duration = duration;
-        this.end_address = end_address;
-        this.end_location = end_location;
-        this.start_address = start_address;
-        this.start_location = start_location;
-        this.steps = steps;
-    }
-
     public int getId() {
         return id;
     }

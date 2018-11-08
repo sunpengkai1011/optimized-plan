@@ -5,7 +5,6 @@ import android.content.Context;
 import com.google.android.gms.maps.GoogleMap;
 
 import industryproject.mit.deliveryoptimise.entities.map.LegInfo;
-import industryproject.mit.deliveryoptimise.entities.map.RouteStored;
 import industryproject.mit.deliveryoptimise.entities.network.RouteResponse;
 import industryproject.mit.deliveryoptimise.entities.parcel.DeliveryLocations;
 import industryproject.mit.deliveryoptimise.model.map.IMap;
@@ -13,7 +12,6 @@ import industryproject.mit.deliveryoptimise.model.map.MapModel;
 import industryproject.mit.deliveryoptimise.network.RequestCallBack;
 import industryproject.mit.deliveryoptimise.utils.MapUtil;
 import industryproject.mit.deliveryoptimise.view.map.IMapView;
-import industryproject.mit.deliveryoptimise.view.map.IRouteStroedView;
 
 /**
  * The implementation of "IMapPresenter"

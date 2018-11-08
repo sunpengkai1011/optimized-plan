@@ -17,10 +17,12 @@ import industryproject.mit.deliveryoptimise.BaseActivity;
 import industryproject.mit.deliveryoptimise.Constants;
 import industryproject.mit.deliveryoptimise.R;
 import industryproject.mit.deliveryoptimise.entities.UserInfo;
-import industryproject.mit.deliveryoptimise.entities.parcel.DeliveryLocations;
 import industryproject.mit.deliveryoptimise.presenter.user.LoginPresenterImpl;
 import industryproject.mit.deliveryoptimise.view.location.DeliveryAddressesActivity;
 
+/**
+ * User information edit page
+ */
 public class UserEditActivity extends BaseActivity implements ILoginView {
     private TextView tv_title, tv_username, tv_phone_number, tv_email;
     private EditText et_phone_number, et_email;

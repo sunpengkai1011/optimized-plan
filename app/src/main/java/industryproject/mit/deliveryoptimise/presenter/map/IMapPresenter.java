@@ -2,7 +2,6 @@ package industryproject.mit.deliveryoptimise.presenter.map;
 
 import com.google.android.gms.maps.GoogleMap;
 
-import industryproject.mit.deliveryoptimise.entities.map.RouteStored;
 import industryproject.mit.deliveryoptimise.entities.network.RouteResponse;
 import industryproject.mit.deliveryoptimise.entities.parcel.DeliveryLocations;
 

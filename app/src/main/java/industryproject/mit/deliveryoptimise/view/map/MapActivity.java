@@ -31,7 +31,6 @@ import industryproject.mit.deliveryoptimise.BaseActivity;
 import industryproject.mit.deliveryoptimise.Constants;
 import industryproject.mit.deliveryoptimise.R;
 import industryproject.mit.deliveryoptimise.adapter.LegRouteAdapter;
-import industryproject.mit.deliveryoptimise.entities.map.RouteStored;
 import industryproject.mit.deliveryoptimise.entities.network.RouteResponse;
 import industryproject.mit.deliveryoptimise.entities.parcel.DeliveryLocations;
 import industryproject.mit.deliveryoptimise.presenter.map.MapPresenterImpl;
@@ -62,7 +61,6 @@ public class MapActivity extends BaseActivity implements
     private Animation animation_in, animation_out;
 
     private int currentLeg = 0;
-    private RouteStored routeStored;
 
     private MapPresenterImpl mapPresenter;
     private boolean isLoaded = false;
@@ -282,7 +280,6 @@ public class MapActivity extends BaseActivity implements
         tv_distance.setText("The distance: " + GeneralUtil.mToKm(distanceAndDuration[0]));
 
         mapPresenter.drawMarkerAndRoute(mMap, response);
-        mapPresenter.routeStored(response);
     }
 
     @Override
