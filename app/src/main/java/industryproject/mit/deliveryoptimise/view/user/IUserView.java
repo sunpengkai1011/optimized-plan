@@ -5,7 +5,7 @@ import industryproject.mit.deliveryoptimise.entities.UserInfo;
 /**
  * The view is related with user information.
  */
-public interface ILoginView {
+public interface IUserView {
     /**
      * The callback of login request
      * @param userInfo user information

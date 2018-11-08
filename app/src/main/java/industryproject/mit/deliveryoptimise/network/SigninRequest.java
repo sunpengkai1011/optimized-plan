@@ -7,11 +7,8 @@ import android.util.Base64;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
-import industryproject.mit.deliveryoptimise.entities.UserInfo;
 import industryproject.mit.deliveryoptimise.entities.network.LoginResponse;
-import industryproject.mit.deliveryoptimise.model.user.UserLoginModel;
 import industryproject.mit.deliveryoptimise.network.service.UserService;
-import io.reactivex.Flowable;
 import io.reactivex.Single;
 
 

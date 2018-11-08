@@ -17,18 +17,18 @@ import industryproject.mit.deliveryoptimise.BaseActivity;
 import industryproject.mit.deliveryoptimise.Constants;
 import industryproject.mit.deliveryoptimise.R;
 import industryproject.mit.deliveryoptimise.entities.UserInfo;
-import industryproject.mit.deliveryoptimise.presenter.user.LoginPresenterImpl;
+import industryproject.mit.deliveryoptimise.presenter.user.UserPresenterImpl;
 import industryproject.mit.deliveryoptimise.view.location.DeliveryAddressesActivity;
 
 /**
  * Login page
  */
-public class LoginActivity extends BaseActivity implements ILoginView{
+public class LoginActivity extends BaseActivity implements IUserView {
     private TextView tv_title, tv_to_register;
     private EditText et_username, et_password;
     private Button btn_login;
 
-    private LoginPresenterImpl loginPresenterImpl;
+    private UserPresenterImpl loginPresenterImpl;
 
     private boolean isQuit = false;
     private String username;
@@ -58,7 +58,7 @@ public class LoginActivity extends BaseActivity implements ILoginView{
         tv_title.setText(getResources().getString(R.string.title_login));
         //Add the under line.
         tv_to_register.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
-        loginPresenterImpl = new LoginPresenterImpl(this, this);
+        loginPresenterImpl = new UserPresenterImpl(this, this);
     }
 
     @Override

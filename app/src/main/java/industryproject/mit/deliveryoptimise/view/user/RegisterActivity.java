@@ -13,20 +13,20 @@ import industryproject.mit.deliveryoptimise.BaseActivity;
 import industryproject.mit.deliveryoptimise.Constants;
 import industryproject.mit.deliveryoptimise.R;
 import industryproject.mit.deliveryoptimise.entities.UserInfo;
-import industryproject.mit.deliveryoptimise.presenter.user.LoginPresenterImpl;
+import industryproject.mit.deliveryoptimise.presenter.user.UserPresenterImpl;
 
 
 /**
  * Registration page
  */
-public class RegisterActivity extends BaseActivity implements ILoginView {
+public class RegisterActivity extends BaseActivity implements IUserView {
     private TextView tv_title;
     private EditText et_username, et_password, et_confirm_pwd, et_phone, et_email;
     private Button btn_register;
     private String username;
     private RelativeLayout lyt_back;
 
-    private LoginPresenterImpl registerPresenter;
+    private UserPresenterImpl registerPresenter;
 
     @Override
     protected void initView() {
@@ -50,7 +50,7 @@ public class RegisterActivity extends BaseActivity implements ILoginView {
         tv_title.setText(R.string.title_register);
         //Display the back button.
         lyt_back.setVisibility(View.VISIBLE);
-        registerPresenter = new LoginPresenterImpl(this, this);
+        registerPresenter = new UserPresenterImpl(this, this);
     }
 
     @Override

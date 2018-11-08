@@ -7,7 +7,7 @@ import industryproject.mit.deliveryoptimise.entities.UserInfo;
 /**
  * The presenter which related with user information
  */
-public interface ILoginPresenter {
+public interface IUserPresenter {
     /**
      * Start to login
      * @param username input username

@@ -17,13 +17,13 @@ import industryproject.mit.deliveryoptimise.BaseActivity;
 import industryproject.mit.deliveryoptimise.Constants;
 import industryproject.mit.deliveryoptimise.R;
 import industryproject.mit.deliveryoptimise.entities.UserInfo;
-import industryproject.mit.deliveryoptimise.presenter.user.LoginPresenterImpl;
+import industryproject.mit.deliveryoptimise.presenter.user.UserPresenterImpl;
 import industryproject.mit.deliveryoptimise.view.location.DeliveryAddressesActivity;
 
 /**
  * User information edit page
  */
-public class UserEditActivity extends BaseActivity implements ILoginView {
+public class UserEditActivity extends BaseActivity implements IUserView {
     private TextView tv_title, tv_username, tv_phone_number, tv_email;
     private EditText et_phone_number, et_email;
     private Button btn_commit;
@@ -33,7 +33,7 @@ public class UserEditActivity extends BaseActivity implements ILoginView {
 
     private boolean isEdit = true;
 
-    private LoginPresenterImpl meEditPresenter;
+    private UserPresenterImpl meEditPresenter;
 
     @Override
     public void initView() {
@@ -63,7 +63,7 @@ public class UserEditActivity extends BaseActivity implements ILoginView {
         //Display the back button.
         lyt_back.setVisibility(View.VISIBLE);
         setTextToEditView();
-        meEditPresenter = new LoginPresenterImpl(this, this);
+        meEditPresenter = new UserPresenterImpl(this, this);
     }
 
     @Override

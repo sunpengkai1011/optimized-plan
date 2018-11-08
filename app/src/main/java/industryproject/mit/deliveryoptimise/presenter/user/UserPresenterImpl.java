@@ -6,23 +6,23 @@ import industryproject.mit.deliveryoptimise.Constants;
 import industryproject.mit.deliveryoptimise.entities.network.LoginResponse;
 import industryproject.mit.deliveryoptimise.entities.network.RegisterResponse;
 import industryproject.mit.deliveryoptimise.entities.UserInfo;
-import industryproject.mit.deliveryoptimise.model.user.IUserLogin;
-import industryproject.mit.deliveryoptimise.model.user.UserLoginModel;
-import industryproject.mit.deliveryoptimise.view.user.ILoginView;
+import industryproject.mit.deliveryoptimise.model.user.IUser;
+import industryproject.mit.deliveryoptimise.model.user.UserModel;
+import industryproject.mit.deliveryoptimise.view.user.IUserView;
 
 
 /**
- * The implementation of "ILoginPresenter"
+ * The implementation of "IUserPresenter"
  */
-public class LoginPresenterImpl implements ILoginPresenter {
-    private ILoginView iLoginView;//View object
-    private IUserLogin iUserLogin;//Model object
+public class UserPresenterImpl implements IUserPresenter {
+    private IUserView iLoginView;//View object
+    private IUser iUserLogin;//Model object
     private Context context;
 
-    public LoginPresenterImpl(Context context, ILoginView iLoginView){
+    public UserPresenterImpl(Context context, IUserView iLoginView){
         this.iLoginView = iLoginView;
         this.context = context;
-        iUserLogin = new UserLoginModel(context, iLoginView);
+        iUserLogin = new UserModel(context, iLoginView);
     }
 
     @Override

@@ -5,7 +5,7 @@ import industryproject.mit.deliveryoptimise.entities.UserInfo;
 /**
  * The interface of login. It is for MVP pattern.
  */
-public interface IUserLogin {
+public interface IUser {
 
     /**
      * @param username

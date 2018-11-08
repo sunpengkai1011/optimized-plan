@@ -12,10 +12,8 @@ import industryproject.mit.deliveryoptimise.network.exception.DataFormatExceptio
 import industryproject.mit.deliveryoptimise.network.exception.EmptyDataException;
 import industryproject.mit.deliveryoptimise.utils.GeneralUtil;
 import industryproject.mit.deliveryoptimise.utils.RetrofitUtil;
-import io.reactivex.Flowable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.PublishSubject;
 import timber.log.Timber;
