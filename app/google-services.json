@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "426496855901",
+    "firebase_url": "https://optimized-plan.firebaseio.com",
+    "project_id": "optimized-plan",
+    "storage_bucket": "optimized-plan.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:426496855901:android:6ae76212eb44d446",
+        "android_client_info": {
+          "package_name": "industryproject.mit.deliveryoptimise"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "426496855901-e42ijefmsldrhqost0r052rt0tp5mso9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "industryproject.mit.deliveryoptimise",
+            "certificate_hash": "be3fa571c4469112c7e555baa88f687db0536552"
+          }
+        },
+        {
+          "client_id": "426496855901-1jin17um1uvab93fegs5jbrlpeba73k1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB717tluFyzwc3qVOthYTGxsfpXBnFSu84"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "426496855901-1jin17um1uvab93fegs5jbrlpeba73k1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

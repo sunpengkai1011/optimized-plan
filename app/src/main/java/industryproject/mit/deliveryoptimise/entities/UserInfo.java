@@ -7,16 +7,20 @@ import java.io.Serializable;
  */
 public class UserInfo implements Serializable{
     private String id;
+    private int role;
+    private String role_name;
     private String user_name;
-    private String password;
+    // Do not serialize password for security reason.
+    private transient String password;
     private String phone;
     private String email;
 
     public UserInfo() {
     }
 
-    public UserInfo(String userName, String password, String phone, String email) {
-        this.user_name = userName;
+    public UserInfo(int role, String user_name, String password, String phone, String email) {
+        this.role = role;
+        this.user_name = user_name;
         this.password = password;
         this.phone = phone;
         this.email = email;
@@ -32,6 +36,22 @@ public class UserInfo implements Serializable{
 
     public void setUser_name(String user_name) {
         this.user_name = user_name;
+    }
+
+    public int getRole() {
+        return role;
+    }
+
+    public void setRole(int role) {
+        this.role = role;
+    }
+
+    public String getRole_name() {
+        return role_name;
+    }
+
+    public void setRole_name(String role_name) {
+        this.role_name = role_name;
     }
 
     public String getPassword() {

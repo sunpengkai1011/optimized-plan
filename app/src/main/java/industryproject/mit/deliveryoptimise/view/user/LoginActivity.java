@@ -18,12 +18,14 @@ import industryproject.mit.deliveryoptimise.Constants;
 import industryproject.mit.deliveryoptimise.R;
 import industryproject.mit.deliveryoptimise.entities.UserInfo;
 import industryproject.mit.deliveryoptimise.presenter.user.UserPresenterImpl;
+import industryproject.mit.deliveryoptimise.utils.GeneralUtil;
 import industryproject.mit.deliveryoptimise.view.location.DeliveryAddressesActivity;
 
 /**
  * Login page
  */
 public class LoginActivity extends BaseActivity implements IUserView {
+    private static final int MAX_SIGNIN_DURATION = 60 * 60 * 24; // Remain login for 24 hours
     private TextView tv_title, tv_to_register;
     private EditText et_username, et_password;
     private Button btn_login;
@@ -58,6 +60,23 @@ public class LoginActivity extends BaseActivity implements IUserView {
         tv_title.setText(getResources().getString(R.string.title_login));
         //Add the under line.
         tv_to_register.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
+        String storedUser = GeneralUtil.getStringFromSP(this, Constants.SP_KEY_USER_INFO);
+        if (!TextUtils.isEmpty(storedUser)) {
+            UserInfo userInfo = GeneralUtil.fromJson(storedUser, UserInfo.class);
+            Constants.userInfo = userInfo;
+            if (userInfo != null) {
+                et_username.setText(userInfo.getUser_name());
+            }
+
+            int lastLoginTimestamp = GeneralUtil.getIntFromSP(this, Constants.SP_KEY_LAST_LOGIN_TIMESTAMP);
+            // Check last login timestamp, if less than 1 day, do not ask for login
+            if ((int) System.currentTimeMillis() / 1000 - lastLoginTimestamp < MAX_SIGNIN_DURATION) {
+                Intent intent = new Intent(LoginActivity.this, DeliveryAddressesActivity.class);
+                startActivity(intent);
+                this.finish();
+            }
+        }
+
         loginPresenterImpl = new UserPresenterImpl(this, this);
     }
 
@@ -69,21 +88,21 @@ public class LoginActivity extends BaseActivity implements IUserView {
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.btn_login:
                 //Get the input username and password
                 String username = et_username.getText().toString().trim();
                 String password = et_password.getText().toString().trim();
                 //Determine the username and password whether are empty.
                 if (!TextUtils.isEmpty(username) &&
-                        !TextUtils.isEmpty(password)){
+                        !TextUtils.isEmpty(password)) {
                     //If they are not empty, start to login.
                     loginPresenterImpl.doLogin(username, password);
-                }else{
+                } else {
                     //If any item is empty, give the corresponding prompt.
-                    if (TextUtils.isEmpty(username)){
+                    if (TextUtils.isEmpty(username)) {
                         Toast.makeText(this, getResources().getString(R.string.toast_empty_username), Toast.LENGTH_SHORT).show();
-                    }else {
+                    } else {
                         Toast.makeText(this, getResources().getString(R.string.toast_empty_password), Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -110,12 +129,14 @@ public class LoginActivity extends BaseActivity implements IUserView {
 
     @Override
     public void loginResult(UserInfo userInfo, String message) {
-        if (userInfo == null){
+        if (userInfo == null) {
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-        }else {
+        } else {
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
             //If the login request is successful, jump to the next page.
             Constants.userInfo = userInfo;
+            GeneralUtil.storeStringIntoSP(this, Constants.SP_KEY_USER_INFO, GeneralUtil.toJson(userInfo, UserInfo.class));
+            GeneralUtil.storeIntIntoSP(this, Constants.SP_KEY_LAST_LOGIN_TIMESTAMP, (int) (System.currentTimeMillis() / 1000));
             Intent intent = new Intent(LoginActivity.this, DeliveryAddressesActivity.class);
             startActivity(intent);
             this.finish();

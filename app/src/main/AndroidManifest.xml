@@ -39,5 +39,15 @@
         <activity android:name=".view.user.LoginActivity"/>
         <activity android:name=".view.user.RegisterActivity"/>
         <activity android:name=".view.location.RouteDetailActivity"/>
+
+        <service
+            android:name=".service.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="be6570ff7af6699daab2e80cecbb400ba389d6a0" />
     </application>
 </manifest>

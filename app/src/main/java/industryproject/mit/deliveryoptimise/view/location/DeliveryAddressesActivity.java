@@ -8,6 +8,7 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.List;
 
@@ -30,6 +33,7 @@ import industryproject.mit.deliveryoptimise.view.user.LoginActivity;
 import industryproject.mit.deliveryoptimise.view.user.UserEditActivity;
 
 public class DeliveryAddressesActivity extends BaseActivity implements IDeliveryAddressesView {
+    private static final String Tag = DeliveryAddressesActivity.class.getSimpleName();
     private TextView tv_title, tv_origin, tv_destination;
     private RelativeLayout lyt_right;
     private SwipeRefreshLayout slyt_all;
@@ -61,11 +65,14 @@ public class DeliveryAddressesActivity extends BaseActivity implements IDelivery
             Intent login = new Intent(this, LoginActivity.class);
             startActivity(login);
             finish();
+        } else {
+            deliveryLocationPresenter.getDeliveryAddresses();
         }
     }
 
     @Override
     protected void initView() {
+        Log.e(Tag, "token = " + FirebaseInstanceId.getInstance().getToken());
         setContentView(R.layout.activity_delivery_location);
         tv_title = findViewById(R.id.tv_title);
         tv_origin = findViewById(R.id.tv_origin);

@@ -71,7 +71,6 @@
                         android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:textColor="@color/grey"
-                        android:text="@string/user_role_staff"
                         android:textSize="@dimen/textSize_standard" />
                 </LinearLayout>
             </RelativeLayout>

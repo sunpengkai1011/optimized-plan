@@ -111,13 +111,27 @@ public class GeneralUtil {
 
     /**
      * Storing the data in local by SharedPreferences.
+     *
      * @param context
-     * @param key store key
+     * @param key     store key
      * @param data
      */
-    public static void storDataBySP(Context context, String key, String data){
+    public static void storeStringIntoSP(Context context, String key, String data) {
         SharedPreferences preferences = context.getSharedPreferences(Constants.SP_KEY, Context.MODE_PRIVATE);
-        preferences.edit().putString(key, data).commit();
+        preferences.edit().putString(key, data).apply();
+    }
+
+
+    /**
+     * Storing the data in local by SharedPreferences.
+     *
+     * @param context
+     * @param key     store key
+     * @param data
+     */
+    public static void storeIntIntoSP(Context context, String key, int data) {
+        SharedPreferences preferences = context.getSharedPreferences(Constants.SP_KEY, Context.MODE_PRIVATE);
+        preferences.edit().putInt(key, data).apply();
     }
 
     /**
@@ -126,7 +140,18 @@ public class GeneralUtil {
      * @param key store key
      * @return data
      */
-    public static String getDataFromSP(Context context, String key){
+    public static int getIntFromSP(Context context, String key){
+        SharedPreferences preferences = context.getSharedPreferences(Constants.SP_KEY, Context.MODE_PRIVATE);
+        return preferences.getInt(key, 0);
+    }
+
+    /**
+     * Get the data from local by SharedPreferences.
+     * @param context
+     * @param key store key
+     * @return data
+     */
+    public static String getStringFromSP(Context context, String key){
         SharedPreferences preferences = context.getSharedPreferences(Constants.SP_KEY, Context.MODE_PRIVATE);
         return preferences.getString(key, "");
     }

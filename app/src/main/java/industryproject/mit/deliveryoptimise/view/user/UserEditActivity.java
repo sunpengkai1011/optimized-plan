@@ -18,13 +18,14 @@ import industryproject.mit.deliveryoptimise.Constants;
 import industryproject.mit.deliveryoptimise.R;
 import industryproject.mit.deliveryoptimise.entities.UserInfo;
 import industryproject.mit.deliveryoptimise.presenter.user.UserPresenterImpl;
+import industryproject.mit.deliveryoptimise.utils.GeneralUtil;
 import industryproject.mit.deliveryoptimise.view.location.DeliveryAddressesActivity;
 
 /**
  * User information edit page
  */
 public class UserEditActivity extends BaseActivity implements IUserView {
-    private TextView tv_title, tv_username, tv_phone_number, tv_email;
+    private TextView tv_title, tv_username, tv_phone_number, tv_email, tv_user_role;
     private EditText et_phone_number, et_email;
     private Button btn_commit;
     private ImageView iv_icon;
@@ -42,6 +43,7 @@ public class UserEditActivity extends BaseActivity implements IUserView {
         tv_username = findViewById(R.id.tv_username);
         tv_phone_number = findViewById(R.id.tv_phone_number);
         tv_email = findViewById(R.id.tv_email);
+        tv_user_role = findViewById(R.id.tv_user_role);
 
         et_phone_number = findViewById(R.id.et_phone_number);
         et_email = findViewById(R.id.et_email);
@@ -79,6 +81,7 @@ public class UserEditActivity extends BaseActivity implements IUserView {
         switch (view.getId()){
             case R.id.btn_commit:
                 if (isEdit) {
+                    GeneralUtil.storeIntIntoSP(this, Constants.SP_KEY_LAST_LOGIN_TIMESTAMP, 0);
                     //Logout
                     Intent intent = new Intent(UserEditActivity.this, DeliveryAddressesActivity.class);
                     intent.putExtra(Constants.KEY_INTENT_CLOSETYPE, Constants.CLOSETYPE_LOGOUT);
@@ -154,6 +157,7 @@ public class UserEditActivity extends BaseActivity implements IUserView {
         btn_commit.setBackgroundColor(getResources().getColor(R.color.background_logout));
         userInfo = Constants.userInfo;
         tv_username.setText(userInfo.getUser_name());
+        tv_user_role.setText(userInfo.getRole_name());
         tv_phone_number.setText(userInfo.getPhone());
         tv_email.setText(userInfo.getEmail());
         et_phone_number.setText(userInfo.getPhone());

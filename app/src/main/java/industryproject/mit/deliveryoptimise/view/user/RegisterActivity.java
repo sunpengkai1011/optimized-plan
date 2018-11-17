@@ -26,7 +26,7 @@ public class RegisterActivity extends BaseActivity implements IUserView {
     private String username;
     private RelativeLayout lyt_back;
 
-    private UserPresenterImpl registerPresenter;
+    private UserPresenterImpl userPresenter;
 
     @Override
     protected void initView() {
@@ -50,7 +50,7 @@ public class RegisterActivity extends BaseActivity implements IUserView {
         tv_title.setText(R.string.title_register);
         //Display the back button.
         lyt_back.setVisibility(View.VISIBLE);
-        registerPresenter = new UserPresenterImpl(this, this);
+        userPresenter = new UserPresenterImpl(this, this);
     }
 
     @Override
@@ -79,16 +79,13 @@ public class RegisterActivity extends BaseActivity implements IUserView {
 
     @Override
     public void registerResult(boolean isSuccess, String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         if (isSuccess){
             //If the registration request is successful, jump to the Login page and send the username to Login page.
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
             intent.putExtra(Constants.KEY_INTENT_USERNAME, username);
             RegisterActivity.this.setResult(RESULT_OK, intent);
             this.finish();
-        }else{
-            //If the registration request is failed, give the prompt.
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -117,9 +114,9 @@ public class RegisterActivity extends BaseActivity implements IUserView {
                 Toast.makeText(this, getResources().getString(R.string.toast_pwd_different), Toast.LENGTH_SHORT).show();
             }else{
                 //Start to register the new user account
-                UserInfo userInfo = new UserInfo(username, password, phone, email);
+                UserInfo userInfo = new UserInfo(1, username, password, phone, email);
                 this.username = username;
-                registerPresenter.doRegister(userInfo);
+                userPresenter.doRegister(userInfo);
             }
         }else {
             //If an item is empty give a corresponding prompt

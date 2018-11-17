@@ -6,6 +6,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 import java.lang.ref.WeakReference;
 
 import industryproject.mit.deliveryoptimise.view.user.LoginActivity;
@@ -18,6 +20,7 @@ public class SplashActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         //Execute the handler program after 2 second
         new MyHandler(new WeakReference(this)).sendEmptyMessageDelayed(0, 2000);
     }
