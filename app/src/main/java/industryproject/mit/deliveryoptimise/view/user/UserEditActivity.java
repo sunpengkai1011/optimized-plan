@@ -140,6 +140,7 @@ public class UserEditActivity extends BaseActivity implements IUserView {
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
             Constants.userInfo = userInfo;
             setTextToEditView();
+            isEdit = true;
         }
     }
 
