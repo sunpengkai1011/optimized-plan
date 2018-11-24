@@ -10,8 +10,7 @@ public class UserInfo implements Serializable{
     private int role;
     private String role_name;
     private String user_name;
-    // Do not serialize password for security reason.
-    private transient String password;
+    private String password;
     private String phone;
     private String email;
 
