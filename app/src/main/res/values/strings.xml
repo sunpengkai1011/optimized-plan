@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DeliveryOptimise</string>
+    <string name="app_name">Route Planner</string>
     <string name="back">Back</string>
     <string name="google_maps_key">AIzaSyA8eJEaPxmkqOSRBC-pNoCQzemiJfIjo5U</string>
     <string name="title_act_locations">LOCATIONS</string>
