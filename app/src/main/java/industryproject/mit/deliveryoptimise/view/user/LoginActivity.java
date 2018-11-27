@@ -70,7 +70,7 @@ public class LoginActivity extends BaseActivity implements IUserView {
 
             int lastLoginTimestamp = GeneralUtil.getIntFromSP(this, Constants.SP_KEY_LAST_LOGIN_TIMESTAMP);
             // Check last login timestamp, if less than 1 day, do not ask for login
-            if ((int) System.currentTimeMillis() / 1000 - lastLoginTimestamp < MAX_SIGNIN_DURATION) {
+            if (System.currentTimeMillis() / 1000 - lastLoginTimestamp < MAX_SIGNIN_DURATION) {
                 Intent intent = new Intent(LoginActivity.this, DeliveryAddressesActivity.class);
                 startActivity(intent);
                 this.finish();
